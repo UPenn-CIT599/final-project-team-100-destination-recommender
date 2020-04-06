@@ -44,58 +44,40 @@ public class CostScoreCalc {
 			if (costOfLiving.getCostOfLiving() < 30) {
 				costScore.put(costOfLiving.getCountry(), 1.0);
 			}
-		}
-		
-		for (Cost costOfLiving : cost) {
-			if (costOfLiving.getCostOfLiving() >= 30 && costOfLiving.getCostOfLiving() < 40) {
+			
+			else if (costOfLiving.getCostOfLiving() >= 30 && costOfLiving.getCostOfLiving() < 40) {
 				costScore.put(costOfLiving.getCountry(), 2.0);
 			}
-		}
-		
-		for (Cost costOfLiving : cost) {
-			if (costOfLiving.getCostOfLiving() >= 40 && costOfLiving.getCostOfLiving() < 50) {
+			
+			else if (costOfLiving.getCostOfLiving() >= 40 && costOfLiving.getCostOfLiving() < 50) {
 				costScore.put(costOfLiving.getCountry(), 3.0);
 			}
-		}
 		
-		for (Cost costOfLiving : cost) {
-			if (costOfLiving.getCostOfLiving() >= 50 && costOfLiving.getCostOfLiving() < 60) {
+			else if (costOfLiving.getCostOfLiving() >= 50 && costOfLiving.getCostOfLiving() < 60) {
 				costScore.put(costOfLiving.getCountry(), 4.0);
 			}
-		}
 		
-		for (Cost costOfLiving : cost) {
-			if (costOfLiving.getCostOfLiving() >= 60 && costOfLiving.getCostOfLiving() < 70) {
+			else if (costOfLiving.getCostOfLiving() >= 60 && costOfLiving.getCostOfLiving() < 70) {
 				costScore.put(costOfLiving.getCountry(), 5.0);
 			}
-		}
 		
-		for (Cost costOfLiving : cost) {
-			if (costOfLiving.getCostOfLiving() >= 70 && costOfLiving.getCostOfLiving() < 80) {
+			else if (costOfLiving.getCostOfLiving() >= 70 && costOfLiving.getCostOfLiving() < 80) {
 				costScore.put(costOfLiving.getCountry(), 6.0);
 			}
-		}
 		
-		for (Cost costOfLiving : cost) {
-			if (costOfLiving.getCostOfLiving() >= 80 && costOfLiving.getCostOfLiving() < 90) {
+			else if (costOfLiving.getCostOfLiving() >= 80 && costOfLiving.getCostOfLiving() < 90) {
 				costScore.put(costOfLiving.getCountry(), 7.0);
 			}
-		}
-
-		for (Cost costOfLiving : cost) {
-			if (costOfLiving.getCostOfLiving() >= 90 && costOfLiving.getCostOfLiving() < 100) {
+		
+			else if (costOfLiving.getCostOfLiving() >= 90 && costOfLiving.getCostOfLiving() < 100) {
 				costScore.put(costOfLiving.getCountry(), 8.0);
 			}
-		}
 		
-		for (Cost costOfLiving : cost) {
-			if (costOfLiving.getCostOfLiving() >= 100 && costOfLiving.getCostOfLiving() < 110) {
+			else if (costOfLiving.getCostOfLiving() >= 100 && costOfLiving.getCostOfLiving() < 110) {
 				costScore.put(costOfLiving.getCountry(), 9.0);
 			}
-		}
 		
-		for (Cost costOfLiving : cost) {
-			if (costOfLiving.getCostOfLiving() >= 110) {
+			else {
 				costScore.put(costOfLiving.getCountry(), 10.0);
 			}
 		}
