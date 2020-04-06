@@ -10,6 +10,13 @@ public class SiteAnalysis {
 	public SiteAnalysis(ArrayList<Site> sites) {
 		this.sites = sites;
 	}
+	
+	
+	/**
+	 * returns an ArrayList of countries with the most number of sites in each country
+	 * 
+	 * @return
+	 */
 
 	public ArrayList<String> getCountryWithMostSites() {
 
@@ -44,7 +51,7 @@ public class SiteAnalysis {
 			System.out.println(countryToNumberOfSites);
 			System.out.println(countryToNumberOfSites.size());
 			System.out.println(sortedCountryList);	
-			countryToNumberOfSites.put(maxKey, -2.0);
+			countryToNumberOfSites.remove(maxKey);
 
 		}
 
