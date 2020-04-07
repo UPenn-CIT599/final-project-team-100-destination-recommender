@@ -3,11 +3,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-public class SiteAnalysis {
+public class SiteScoreCalc {
 
 	ArrayList<Site> sites = new ArrayList<Site>();
 
-	public SiteAnalysis(ArrayList<Site> sites) {
+	public SiteScoreCalc(ArrayList<Site> sites) {
 		this.sites = sites;
 	}
 
