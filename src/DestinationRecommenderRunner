@@ -1,11 +1,13 @@
+
 public class DestinationRecommenderRunner {
 
-  /**
-  * Main method where the Destination Recommender runs
-  *
-  */
-  public static void main(String[] args) {
-  
-  }
+	/**
+	 * Main method where the Destination Recommender runs
+	 *
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
 
 }
