@@ -55,4 +55,18 @@ public class FileReader {
 
 		return cost;
 	}
+	
+	/**
+	 * Reads in a CSV of cost data with informatiion about different world heritage sites and
+	 * stores the information in an ArrayList
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	public static ArrayList<Site> siteFileReader(String fileName) {
+
+		ArrayList<Site> site = new ArrayList<Site>();
+		
+		return site;
+	}
 }
