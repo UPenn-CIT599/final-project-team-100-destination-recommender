@@ -1,13 +1,12 @@
 
 public class DestinationRecommenderRunner {
-
-	/**
-	 * Main method where the Destination Recommender runs
-	 *
-	 */
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+		SiteAnalysis siteAnalysis = new SiteAnalysis(SiteReader.readCSV());
+		SiteReader.readCSV();
+		System.out.println(siteAnalysis.getCountryWithMostSites(5));
+		
 	}
 
 }
