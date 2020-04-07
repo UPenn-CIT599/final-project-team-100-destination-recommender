@@ -6,8 +6,8 @@ public class DestinationRecommenderRunner {
      */
 	public static void main(String[] args) {
 		
-		SiteScoreCalc siteAnalysis = new SiteScoreCalc(SiteReader.readCSV());
-		SiteReader.readCSV();
+		SiteScoreCalc siteAnalysis = new SiteScoreCalc(FileReader.readCSV());
+		FileReader.readCSV();
 		System.out.println(siteAnalysis.getCountryWithMostSites(5));
         
         // instance of DestinationRecommender class
