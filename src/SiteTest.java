@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class SiteTest {
 	
-	SiteAnalysis testSite = new SiteAnalysis(SiteReader.readCSV());
+	SiteScoreCalc testSite = new SiteScoreCalc(FileReader.readCSV());
 
 	/**
 	 * tests to see if the countries if the most sites are recorded properly
