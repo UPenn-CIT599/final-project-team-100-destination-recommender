@@ -7,6 +7,8 @@ public class DestinationRecommenderRunner {
 		SiteReader.readCSV();
 		System.out.println(siteAnalysis.getCountryWithMostSites(5));
 		
+		// DestinationRecommender DR = new DestinationRecommender();
+		
 	}
 
 }
