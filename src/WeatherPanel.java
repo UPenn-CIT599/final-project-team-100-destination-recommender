@@ -7,10 +7,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+
 import javax.swing.JComboBox;
 
-public class WeatherPanel extends JPanel {
+public class WeatherPanel extends JPanel
+                          implements ActionListener {
     
+    private String monthSelected;
+    
+    public String getMonthSelected() {
+        return monthSelected;
+    }
+
     public WeatherPanel() {
         
         // Set size
@@ -40,17 +51,31 @@ public class WeatherPanel extends JPanel {
         
         //// Second Row /////////////////////////////////
         
-        JComboBox comboBox = new JComboBox();
+        String[] months = { "January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December" };
+        
+        JComboBox<String[]> monthComboBox = new JComboBox(months);
+        monthComboBox.setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
+        monthComboBox.addActionListener(this);
+        
+        
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
        
         gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
         
         gbc_comboBox.gridx = 0;
         gbc_comboBox.gridy = 1;
-        add(comboBox, gbc_comboBox);
+        add(monthComboBox, gbc_comboBox);
 
 
 
+        
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        
+        JComboBox cb = (JComboBox)e.getSource();
+        monthSelected = (String)cb.getSelectedItem();
         
     }
 
