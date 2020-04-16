@@ -12,7 +12,7 @@ public class UserInterface {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new MainFrame("Euro Trip Destination Recommender");
-                frame.setSize(450, 600);
+                frame.setSize(450, 500);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
             }

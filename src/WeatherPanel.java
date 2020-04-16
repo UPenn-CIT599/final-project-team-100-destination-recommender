@@ -18,7 +18,7 @@ public class WeatherPanel extends JPanel
                           implements ActionListener {
     
     private String monthSelected;
-    static final int WEATHER_MIN = -50;
+    static final int WEATHER_MIN = 0;
     static final int WEATHER_MAX = 100;
     static final int WEATHER_INIT = 75;
     
@@ -29,7 +29,7 @@ public class WeatherPanel extends JPanel
     public WeatherPanel() {
         
         // Set size
-        setPreferredSize(new Dimension(327, 133));
+        setPreferredSize(new Dimension(400, 150));
         
         // Set title
         setBorder(BorderFactory.createTitledBorder("Weather Preference"));
@@ -66,7 +66,7 @@ public class WeatherPanel extends JPanel
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.insets = new Insets(0, 0, 5, 0);
        
-        gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+        //gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
         
         gbc_comboBox.gridx = 0;
         gbc_comboBox.gridy = 1;
@@ -83,19 +83,20 @@ public class WeatherPanel extends JPanel
 
         //// Fourth Row /////////////////////////////////
         
-        JSlider weatherSlider = new JSlider(JSlider.HORIZONTAL,
+        JSlider slider = new JSlider(JSlider.HORIZONTAL,
                 WEATHER_MIN, WEATHER_MAX, WEATHER_INIT);
-        weatherSlider.setMajorTickSpacing(25);
-        weatherSlider.setMinorTickSpacing(5);
-        weatherSlider.setPaintTicks(true);
-        weatherSlider.setPaintLabels(true);
+        slider.setMajorTickSpacing(25);
+        slider.setMinorTickSpacing(5);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
         
         
         GridBagConstraints gbc_slider = new GridBagConstraints();
         gbc_slider.fill = GridBagConstraints.HORIZONTAL;
+        gbc_slider.weightx = 1;
         gbc_slider.gridx = 0;
         gbc_slider.gridy = 3;
-        add(weatherSlider, gbc_slider);
+        add(slider, gbc_slider);
 
 
 
