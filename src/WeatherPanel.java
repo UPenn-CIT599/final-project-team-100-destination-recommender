@@ -18,7 +18,7 @@ public class WeatherPanel extends JPanel
                           implements ActionListener {
     
     private String monthSelected;
-    static final int WEATHER_MIN = 0;
+    static final int WEATHER_MIN = -50;
     static final int WEATHER_MAX = 100;
     static final int WEATHER_INIT = 75;
     
