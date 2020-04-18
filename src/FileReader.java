@@ -91,4 +91,52 @@ public class FileReader {
 		return sites;
 		
 	}
+	
+	/**
+	 * Reads in a CSV of cost data with information about different world heritage
+	 * sites and stores the information in an ArrayList
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	public static ArrayList<Data> readDataCSV() {
+
+		ArrayList<Data> lines = new ArrayList<Data>();
+		File dataFile = new File("CombinedData.csv");
+
+		try {
+			Scanner fileReader = new Scanner(dataFile);
+			fileReader.nextLine();
+			while (fileReader.hasNextLine()) {
+				String eachLine = fileReader.nextLine();
+				String[] lineComponents = eachLine.split(",");
+				String country = lineComponents[0];
+				int siteCount = Integer.parseInt(lineComponents[1]);
+				double costOfLiving = Double.parseDouble(lineComponents[2]);
+				double janTemp = Double.parseDouble(lineComponents[3]);
+				double febTemp = Double.parseDouble(lineComponents[4]);
+				double marchTemp = Double.parseDouble(lineComponents[5]);
+				double aprilTemp = Double.parseDouble(lineComponents[6]);
+				double mayTemp = Double.parseDouble(lineComponents[7]);
+				double juneTemp = Double.parseDouble(lineComponents[8]);
+				double julyTemp = Double.parseDouble(lineComponents[9]);
+				double augTemp = Double.parseDouble(lineComponents[10]);
+				double septTemp = Double.parseDouble(lineComponents[11]);
+				double octTemp = Double.parseDouble(lineComponents[12]);
+				double novTemp = Double.parseDouble(lineComponents[13]);
+				double decTemp = Double.parseDouble(lineComponents[14]);
+				Data data = new Data(country, siteCount, costOfLiving, janTemp, febTemp, marchTemp, aprilTemp, mayTemp,
+						juneTemp, julyTemp, augTemp, septTemp, octTemp, novTemp, decTemp);
+				lines.add(data);
+			}
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("File not found!");
+			e.printStackTrace();
+		}
+
+		return lines;
+
+	}
 }
