@@ -2,45 +2,32 @@
 public class Country {
 	
 	private String name;
-	private double siteScore;
-	private double costScore;
-	private double weatherScore;
+	private double numSites;
+	private double costOfLiving;
+	private double temperature;
 	
-	/**
-	 * creates a country class where the site score, cost score and weather score
-	 * will be passed into the parameters for each country
-	 * @param name
-	 * @param siteScore
-	 * @param costScore
-	 * @param weatherScore
-	 */
-
-	public Country(String name, double siteScore, double costScore, double weatherScore) {
+	public Country(String name, double numSites, double costOfLiving, double temperature) {
 		this.name = name;
-		this.siteScore = siteScore;
-		this.costScore = costScore;
-		this.weatherScore = weatherScore;
+		this.numSites = numSites;
+		this.costOfLiving = costOfLiving;
+		this.temperature = temperature;
 	}
 	
-	/**
-	 * list of getters
-	 * @return
-	 */
-	
-	public String getCountryName() {
+	public String getName() {
 		return name;
 	}
 	
-	public double getSiteScore() {
-		return siteScore;
+	public double getNumSites() {
+		return numSites;
 	}
 	
-	public double getCostScore() {
-		return costScore;
+	public double getCostOfLiving() {
+		return costOfLiving;
 	}
 	
-	public double getWeatherScore() {
-		return weatherScore;
+	public double getTemperature() {
+		return temperature;
 	}
-	
+
+
 }
