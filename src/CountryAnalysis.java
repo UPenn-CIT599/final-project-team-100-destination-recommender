@@ -12,9 +12,9 @@ public class CountryAnalysis {
 		for (Country country : countries) {
 			String name = country.getName();
 			double siteScore = siteWeight * country.getNumSites();
-			double costScore = costWeight * 1.0 / country.getCostOfLiving();
+			double costScore = costWeight * country.getCostOfLiving();
 			double weatherScore = weatherWeight * Math.abs(country.getTemperature() - userInputTemp);
-			double totalScore = siteScore + costScore + weatherScore;
+			double totalScore = -siteScore + costScore + weatherScore;
 			CountryScore countryScore = new CountryScore(name, siteScore, costScore, weatherScore, totalScore);
 			countryScores.add(countryScore);
 //			System.out.println(countryScore.getName()+ "  " + countryScore.getTotalScore());
@@ -28,7 +28,7 @@ public class CountryAnalysis {
 		ryan.sort(null);
 
 		for (int i = 0; i < ryan.size() && i < topN; i++) {
-			System.out.println(ryan.get(i).getName());
+			System.out.println(ryan.get(i).getName() + " " + ryan.get(i).getTotalScore());
 			countryNames.add(ryan.get(i).getName());
 		}
 

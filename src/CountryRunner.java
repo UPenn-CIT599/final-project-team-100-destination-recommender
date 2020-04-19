@@ -16,8 +16,7 @@ public class CountryRunner {
 //		System.out.println(ca.applyWeights(0.7, 0.3, 0.4, 90).get(5).getTotalScore());
 //
 //		System.out.println(ca.applyWeights(0.7, 0.3, 0.4, 90).get(11).getTotalScore());
-		ArrayList<CountryScore> cs = ca.applyWeights(0.2, 1, 0.2, 72);
-
+		ArrayList<CountryScore> cs = ca.applyWeights(0, 0, 1, 2);
 		System.out.println(ca.sortCountriesByTotalScore(cs, 5));
 		
 

@@ -40,8 +40,8 @@ public class CountryScore implements Comparable{
 	public int compareTo(Object otherCountryScore) {
 		CountryScore myOtherCountryScore = (CountryScore) otherCountryScore;
 		if (myOtherCountryScore.getTotalScore() == totalScore) return 0;
-		if (myOtherCountryScore.getTotalScore() - totalScore > 0) return 1;
-		return -1;
+		if (myOtherCountryScore.getTotalScore() - totalScore > 0) return -1;
+		return 1;
 	}
 	
 	
