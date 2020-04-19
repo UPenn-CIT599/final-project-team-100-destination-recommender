@@ -23,24 +23,24 @@ public class CountryAnalysis {
 
 	}
 
-	public ArrayList<String> getTravelDestinations(ArrayList<CountryScore> totalScoreOfEachCountry, int topN) {
+// 	public ArrayList<String> getTravelDestinations(ArrayList<CountryScore> totalScoreOfEachCountry, int topN) {
 		
-		ArrayList<String> travelRecommendations = new ArrayList<String>();
+// 		ArrayList<String> travelRecommendations = new ArrayList<String>();
 
-		for (int i = 0; i < topN; i++) {
-			for (CountryScore countryScore : totalScoreOfEachCountry) {
-				double maxTotalScore = -5;
-				if (countryScore.getTotalScore() > maxTotalScore) {
-					maxTotalScore = countryScore.getTotalScore();
-				}
-				String countryName = countryScore.getName();
-				travelRecommendations.add(countryName);
-				totalScoreOfEachCountry.remove(countryScore);
-			}
+// 		for (int i = 0; i < topN; i++) {
+// 			for (CountryScore countryScore : totalScoreOfEachCountry) {
+// 				double maxTotalScore = -5;
+// 				if (countryScore.getTotalScore() > maxTotalScore) {
+// 					maxTotalScore = countryScore.getTotalScore();
+// 				}
+// 				String countryName = countryScore.getName();
+// 				travelRecommendations.add(countryName);
+// 				totalScoreOfEachCountry.remove(countryScore);
+// 			}
 
-		}
+// 		}
 
-		return null;
-	}
+// 		return null;
+// 	}
 
 }
