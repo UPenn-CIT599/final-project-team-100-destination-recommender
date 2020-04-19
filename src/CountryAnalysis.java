@@ -12,35 +12,46 @@ public class CountryAnalysis {
 		for (Country country : countries) {
 			String name = country.getName();
 			double siteScore = siteWeight * country.getNumSites();
-			double costScore = costWeight * country.getCostOfLiving();
-			double weatherScore = Math.abs(weatherWeight * country.getTemperature() - userInputTemp);
+			double costScore = costWeight * 1.0 / country.getCostOfLiving();
+			double weatherScore = weatherWeight * Math.abs(country.getTemperature() - userInputTemp);
 			double totalScore = siteScore + costScore + weatherScore;
 			CountryScore countryScore = new CountryScore(name, siteScore, costScore, weatherScore, totalScore);
 			countryScores.add(countryScore);
+//			System.out.println(countryScore.getName()+ "  " + countryScore.getTotalScore());
 		}
-
+//		System.out.println(countryScores.size());
 		return countryScores;
-
 	}
 
-// 	public ArrayList<String> getTravelDestinations(ArrayList<CountryScore> totalScoreOfEachCountry, int topN) {
-		
-// 		ArrayList<String> travelRecommendations = new ArrayList<String>();
+	public ArrayList<String> sortCountriesByTotalScore(ArrayList<CountryScore> ryan, int topN) {
+		ArrayList<String> countryNames = new ArrayList<String>();
+		ryan.sort(null);
 
-// 		for (int i = 0; i < topN; i++) {
-// 			for (CountryScore countryScore : totalScoreOfEachCountry) {
-// 				double maxTotalScore = -5;
-// 				if (countryScore.getTotalScore() > maxTotalScore) {
-// 					maxTotalScore = countryScore.getTotalScore();
-// 				}
-// 				String countryName = countryScore.getName();
-// 				travelRecommendations.add(countryName);
-// 				totalScoreOfEachCountry.remove(countryScore);
-// 			}
+		for (int i = 0; i < ryan.size() && i < topN; i++) {
+			System.out.println(ryan.get(i).getName());
+			countryNames.add(ryan.get(i).getName());
+		}
 
-// 		}
+		return countryNames;
+	}
 
-// 		return null;
-// 	}
+//	public ArrayList<String> getTravelDestinations(ArrayList<CountryScore> totalScoreOfEachCountry, int topN) {
+//
+//		ArrayList<String> travelRecommendations = new ArrayList<String>();
+//
+//		for (int i = 0; i < topN; i++) {
+//			double maxTotalScore = -5;
+//			for (int j = 0; j < totalScoreOfEachCountry.size(); j++) {
+//				if (j > maxTotalScore) {
+//					maxTotalScore = j;
+//				}
+//				String countryName = countryScore.getName();
+//				travelRecommendations.add(countryName);
+//				totalScoreOfEachCountry.remove(countryScore);
+//			}
+//		}
+//
+//		return null;
+//	}
 
 }
