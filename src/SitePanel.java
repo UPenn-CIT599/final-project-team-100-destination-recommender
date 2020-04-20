@@ -6,21 +6,31 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.Insets;
 
-public class SitesPanel extends JPanel {
+public class SitePanel extends JPanel 
+                       implements ChangeListener {
+
     
+    private double sitePreference;
     private static int SLIDER_MIN = 0;
     private static int SLIDER_MAX = 100;
-    private static int SLIDER_INIT = 50;
+    private static int SLIDER_INIT = 0;
+    
+    public double getSitePreference() {
+        return sitePreference;
+    }
 
     /**
      * Create the panel.
      */
-    public SitesPanel() {
+    public SitePanel() {
         
         // Set size
-        setPreferredSize(new Dimension(400, 133));
+        setPreferredSize(new Dimension(500, 133));
         
         // Set title
         setBorder(BorderFactory.createTitledBorder("Sites Preference"));
@@ -47,6 +57,7 @@ public class SitesPanel extends JPanel {
         slider.setMinorTickSpacing(5);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
+        slider.addChangeListener(this);
         
         GridBagConstraints gbc_slider = new GridBagConstraints();
         gbc_slider.fill = GridBagConstraints.HORIZONTAL;
@@ -55,6 +66,16 @@ public class SitesPanel extends JPanel {
         gbc_slider.gridy = 1;
         add(slider, gbc_slider);
 
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+
+        JSlider source = (JSlider) e.getSource();
+        if (!source.getValueIsAdjusting()) {
+            sitePreference = (double) source.getValue();
+        }
+        
     }
 
 }
