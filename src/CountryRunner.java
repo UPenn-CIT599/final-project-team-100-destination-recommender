@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class CountryRunner {
 
@@ -16,8 +17,23 @@ public class CountryRunner {
 //		System.out.println(ca.applyWeights(0.7, 0.3, 0.4, 90).get(5).getTotalScore());
 //
 //		System.out.println(ca.applyWeights(0.7, 0.3, 0.4, 90).get(11).getTotalScore());
-		ArrayList<CountryScore> cs = ca.applyWeights(0, 0, 1, 2);
-		System.out.println(ca.sortCountriesByTotalScore(cs, 5));
+
+		Scanner s = new Scanner(System.in);
+		System.out.println("How important are sites?");
+		double siteWeight = s.nextDouble();
+		System.out.println("How important is cost?");
+		double costWeight = s.nextDouble();
+		System.out.println("How important is weather?");
+		double weatherWeight = s.nextDouble();		
+		System.out.println("What is your ideal temperature?");
+		double idealTemp = s.nextDouble();
+
+		
+		
+		ArrayList<CountryScore> cs = ca.applyWeights(siteWeight, costWeight, weatherWeight, idealTemp);
+		int number = 5;
+		System.out.println("We recommend the following " + number + " destinations");
+		System.out.println(ca.sortCountriesByTotalScore(cs, number));
 		
 
 		

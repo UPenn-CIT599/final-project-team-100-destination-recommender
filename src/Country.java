@@ -4,13 +4,14 @@ public class Country {
 	private String name;
 	private double numSites;
 	private double costOfLiving;
-	private double temperature;
+	private double monthTemperature;
 	
-	public Country(String name, double numSites, double costOfLiving, double temperature) {
+	public Country(String name, double numSites, double costOfLiving, double monthTemperature) {
 		this.name = name;
 		this.numSites = numSites;
 		this.costOfLiving = costOfLiving;
-		this.temperature = temperature;
+		this.monthTemperature = monthTemperature;
+		this.monthTemperature = monthTemperature;
 	}
 	
 	public String getName() {
@@ -25,9 +26,8 @@ public class Country {
 		return costOfLiving;
 	}
 	
-	public double getTemperature() {
-		return temperature;
+	public double getMonthTemperature() {
+		return monthTemperature;
 	}
-
-
+	
 }
