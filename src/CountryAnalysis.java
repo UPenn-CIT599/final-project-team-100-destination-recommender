@@ -1,13 +1,26 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CountryAnalysis {
 
 	FileReader fr = new FileReader();
+	double siteWeight;
+	double costWeight;
+	double weatherWeight;
+	double userInputTemp;
+
+	public static final DecimalFormat df1 = new DecimalFormat("#.00");
+	public static final DecimalFormat df2 = new DecimalFormat("#.##");
 
 	public ArrayList<CountryScore> applyWeights(double siteWeight, double costWeight, double weatherWeight,
 			double userInputTemp) {
 		ArrayList<Country> countries = fr.readCSV();
 		ArrayList<CountryScore> countryScores = new ArrayList<CountryScore>();
+
+		this.siteWeight = siteWeight;
+		this.costWeight = costWeight;
+		this.weatherWeight = weatherWeight;
+		this.userInputTemp = userInputTemp;
 
 		for (Country country : countries) {
 			String name = country.getName();
@@ -27,34 +40,30 @@ public class CountryAnalysis {
 		ArrayList<String> countryNames = new ArrayList<String>();
 		ryan.sort(null);
 
+		System.out.format("%-10s", "Rank");
+		System.out.format("%-15s", "Country");
+		System.out.format("%-20s", "Number of Sites");
+		System.out.format("%-20s", "Cost Of Living");
+		System.out.format("%-20s", "Average Temperature");
+		System.out.println();
+		System.out.format("%-75s", "-------------------------------------------------------------------------------------");
+		System.out.println();
+
 		for (int i = 0; i < ryan.size() && i < topN; i++) {
-			System.out.println(ryan.get(i).getName() + " " + ryan.get(i).getTotalScore());
-			System.out.println(ryan.get(i).getSiteScore());
-			System.out.println(ryan.get(i).getCostScore());
-			System.out.println(ryan.get(i).getWeatherScore());
+			int index = i+1;
+			System.out.format("%-10s", index + ".");
+			System.out.format("%-15s", ryan.get(i).getName());
+			System.out.format("%-20s", df2.format(ryan.get(i).getSiteScore() / siteWeight));
+			System.out.format("%-20s", df1.format(ryan.get(i).getCostScore() / costWeight));
+			System.out.format("%-20s",
+					df1.format(ryan.get(i).getWeatherScore() / weatherWeight + userInputTemp) + " F");
+			System.out.println();
+
+
 			countryNames.add(ryan.get(i).getName());
 		}
 
 		return countryNames;
 	}
-
-//	public ArrayList<String> getTravelDestinations(ArrayList<CountryScore> totalScoreOfEachCountry, int topN) {
-//
-//		ArrayList<String> travelRecommendations = new ArrayList<String>();
-//
-//		for (int i = 0; i < topN; i++) {
-//			double maxTotalScore = -5;
-//			for (int j = 0; j < totalScoreOfEachCountry.size(); j++) {
-//				if (j > maxTotalScore) {
-//					maxTotalScore = j;
-//				}
-//				String countryName = countryScore.getName();
-//				travelRecommendations.add(countryName);
-//				totalScoreOfEachCountry.remove(countryScore);
-//			}
-//		}
-//
-//		return null;
-//	}
 
 }
