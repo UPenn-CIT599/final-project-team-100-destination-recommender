@@ -3,6 +3,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -74,12 +75,16 @@ public class MainFrame extends JFrame implements ActionListener {
                 double sitePreference = sitePanel.getSitePreference();
                 double costPreference = costPanel.getCostPreference();
                 
-                System.out.println("Trip month: " + tripMonth);
-                System.out.println("Ideal temp: " + idealTemp);
-                System.out.println("Weather preference: " + weatherPreference);
-                System.out.println("Site preference: " + sitePreference);
-                System.out.println("Cost preference: " + costPreference);
-                System.out.println("topN = " + topN);
+                CountryAnalysis ca = new CountryAnalysis();
+                ArrayList<CountryScore> cs = ca.applyWeights(sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
+                ca.sortCountriesByTotalScore(cs, topN);
+                
+//                System.out.println("Trip month: " + tripMonth);
+//                System.out.println("Ideal temp: " + idealTemp);
+//                System.out.println("Weather preference: " + weatherPreference);
+//                System.out.println("Site preference: " + sitePreference);
+//                System.out.println("Cost preference: " + costPreference);
+//                System.out.println("topN = " + topN);
 
                 
             }

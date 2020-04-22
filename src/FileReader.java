@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public class FileReader {
 
-	public ArrayList<Country> readCSV() {
+	public ArrayList<Country> readCSV(String month) {
 
 		ArrayList<Country> countries = new ArrayList<Country>();
 		File countryFile = new File("master.csv");
 
-		Scanner s = new Scanner(System.in);
-		System.out.println("Which month would you like to travel? ");
-		String monthInput = s.nextLine();
+//		Scanner s = new Scanner(System.in);
+//		System.out.println("Which month would you like to travel? ");
+//		String monthInput = s.nextLine();
 
 		try {
 			Scanner fileReader = new Scanner(countryFile);
@@ -26,30 +26,30 @@ public class FileReader {
 //				double monthTemperature = Double.parseDouble(lineComponents[3]);
 
 				double monthTemperature = 100;
-				if (monthInput.equals("January")) {
+				if (month.equals("January")) {
 					monthTemperature = Double.parseDouble(lineComponents[3]);
-				} else if (monthInput.toUpperCase().equals("FEBRUARY")) {
+				} else if (month.toUpperCase().equals("FEBRUARY")) {
 					monthTemperature = Double.parseDouble(lineComponents[4]);
-				} else if (monthInput.equals("March")) {
+				} else if (month.equals("March")) {
 					monthTemperature = Double.parseDouble(lineComponents[5]);
-				} else if (monthInput.equals("April")) {
+				} else if (month.equals("April")) {
 //					double monthTemperature = 11;
 					monthTemperature = Double.parseDouble(lineComponents[6]);
-				} else if (monthInput.equals("May")) {
+				} else if (month.equals("May")) {
 					monthTemperature = Double.parseDouble(lineComponents[7]);
-				} else if (monthInput.equals("June")) {
+				} else if (month.equals("June")) {
 					monthTemperature = Double.parseDouble(lineComponents[8]);
-				} else if (monthInput.equals("July")) {
+				} else if (month.equals("July")) {
 					monthTemperature = Double.parseDouble(lineComponents[9]);
-				} else if (monthInput.equals("August")) {
+				} else if (month.equals("August")) {
 					monthTemperature = Double.parseDouble(lineComponents[10]);
-				} else if (monthInput.equals("September")) {
+				} else if (month.equals("September")) {
 					monthTemperature = Double.parseDouble(lineComponents[11]);
-				} else if (monthInput.equals("October")) {
+				} else if (month.equals("October")) {
 					monthTemperature = Double.parseDouble(lineComponents[12]);
-				} else if (monthInput.equals("November")) {
+				} else if (month.equals("November")) {
 					monthTemperature = Double.parseDouble(lineComponents[13]);
-				} else if (monthInput.equals("December")) {
+				} else if (month.equals("December")) {
 					monthTemperature = Double.parseDouble(lineComponents[14]);
 				} 
 				Country country = new Country(name, numSites, costOfLiving, monthTemperature);

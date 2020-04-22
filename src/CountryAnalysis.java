@@ -13,8 +13,8 @@ public class CountryAnalysis {
 	public static final DecimalFormat df2 = new DecimalFormat("#.##");
 
 	public ArrayList<CountryScore> applyWeights(double siteWeight, double costWeight, double weatherWeight,
-			double userInputTemp) {
-		ArrayList<Country> countries = fr.readCSV();
+			double userInputTemp, String month) {
+		ArrayList<Country> countries = fr.readCSV(month);
 		ArrayList<CountryScore> countryScores = new ArrayList<CountryScore>();
 
 		this.siteWeight = siteWeight;
