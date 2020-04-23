@@ -1,34 +1,29 @@
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 
-import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.SpinnerNumberModel;
 
-public class WeatherPanel extends JPanel
-                          implements ActionListener,
-                                     ChangeListener {
+public class WeatherPanel extends TripComponentPanel
+                          implements ActionListener {
     
+    /**
+     * Instance variables related to month combo box
+     */
     private String[] months = { "January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December" };
     private String monthSelected;
-    private double idealTemp;
-    private double weatherPreference;
-    static final int WEATHER_MIN = 0;
-    static final int WEATHER_MAX = 100;
-    static final int WEATHER_INIT = 0;
-    
-    JTextField tempTextField;
+        
+    private JTextField tempTextField;
+    private JSpinner tempSpinner;
     
     public String getMonthSelected() {
         if (monthSelected == null) {
@@ -38,28 +33,17 @@ public class WeatherPanel extends JPanel
         return monthSelected;
     }
     
-    public double getWeatherPreference() {        
-        return weatherPreference;
-    }
-    
     public double getIdealTemp() {
-        return Double.parseDouble(tempTextField.getText()); // need to add try catch for number format exception
+        return (double) ((Integer) tempSpinner.getValue()).intValue();
     }
 
     public WeatherPanel() {
         
-        // Set size
-        setPreferredSize(new Dimension(500, 150));
+        super("Weather Preference", 150);
         
-        // Set title
-        setBorder(BorderFactory.createTitledBorder("Weather Preference"));
-                
-        // Set layout
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWeights = new double[]{1.0};
-        setLayout(gridBagLayout);
+        // GRID LAYOUT: 4 rows x 2 columns
         
-        //// First Row, First Column /////////////////////////////////
+        //// Row 1, Col 1: Month Question /////////////////////////////////
         
         JLabel monthQuestion = new JLabel("What month are you planning to travel?");
         GridBagConstraints gbc_monthQuestion = new GridBagConstraints();
@@ -73,7 +57,7 @@ public class WeatherPanel extends JPanel
         gbc_monthQuestion.gridy = 0;
         add(monthQuestion, gbc_monthQuestion);
         
-        //// First Row, Second Column /////////////////////////////////
+        //// Row 1, Col 2: Temperature Question /////////////////////////////////
         
         JLabel tempQuestion = new JLabel("Ideal temperature (ºF):");
         GridBagConstraints gbc_tempQuestion = new GridBagConstraints();
@@ -87,31 +71,36 @@ public class WeatherPanel extends JPanel
         gbc_tempQuestion.gridy = 0;
         add(tempQuestion, gbc_tempQuestion);
         
-        //// Second Row, First Column /////////////////////////////////
+        // Row 2, Col 1: Month ComboBox /////////////////////////////////
             
         JComboBox<String[]> monthComboBox = new JComboBox(months);
         monthComboBox.setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
         monthComboBox.addActionListener(this);
         
-        
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.insets = new Insets(0, 0, 5, 0);
-       
-        //gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
         
         gbc_comboBox.gridx = 0;
         gbc_comboBox.gridy = 1;
         add(monthComboBox, gbc_comboBox);
         
-        //// Second Row, Second Column /////////////////////////////////
-
-        tempTextField = new JTextField(3);
-        GridBagConstraints gbc_tempTextField = new GridBagConstraints();
-        gbc_tempTextField.gridx = 1;
-        gbc_tempTextField.gridy = 1;
-        add(tempTextField, gbc_tempTextField);
+        //// Row 2, Col 2: Temperature Spinner /////////////////////////////////
         
-        //// Third Row /////////////////////////////////
+        SpinnerNumberModel tempModel = new SpinnerNumberModel(58, // initial temp, set to avg temp on Earth
+                                                              -128, // min temp, set to min temp recorded on Earth
+                                                              134, // max temp, set to max temp recorded on Earth
+                                                              1); // step size
+        tempSpinner = new JSpinner(tempModel);
+        JFormattedTextField tempTextField = ((JSpinner.DefaultEditor) tempSpinner.getEditor()).getTextField();
+        tempTextField.setEditable(false);
+        tempTextField.setBackground(Color.white);
+        
+        GridBagConstraints gbc_tempSpinner = new GridBagConstraints();
+        gbc_tempSpinner.gridx = 1;
+        gbc_tempSpinner.gridy = 1;
+        add(tempSpinner, gbc_tempSpinner);
+        
+        //// Row 3, Col 1-2: Weather Preference Question /////////////////////////////////
         
         JLabel lblNewLabel = new JLabel("How important is weather for your trip?");
         GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -121,16 +110,12 @@ public class WeatherPanel extends JPanel
         gbc_lblNewLabel.gridwidth = 2;
         add(lblNewLabel, gbc_lblNewLabel);
 
-        //// Fourth Row /////////////////////////////////
+        //// Row 4, Col 1-2: Weather Slider /////////////////////////////////
         
-        JSlider slider = new JSlider(JSlider.HORIZONTAL,
-                WEATHER_MIN, WEATHER_MAX, WEATHER_INIT);
-        slider.setMajorTickSpacing(25);
-        slider.setMinorTickSpacing(5);
-        slider.setPaintTicks(true);
-        slider.setPaintLabels(true);
-        slider.addChangeListener(this);
-        
+        String left = "Not important";
+        String mid = "Kinda important";
+        String right = "Very important";
+        slider.setUpSlider(left, mid, right);
         
         GridBagConstraints gbc_slider = new GridBagConstraints();
         gbc_slider.fill = GridBagConstraints.HORIZONTAL;
@@ -147,15 +132,6 @@ public class WeatherPanel extends JPanel
         JComboBox cb = (JComboBox) e.getSource();
         monthSelected = (String) cb.getSelectedItem();
         
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        
-        JSlider source = (JSlider) e.getSource();
-        if (!source.getValueIsAdjusting()) {
-            weatherPreference = (double) source.getValue();
-        }
     }
 
 }

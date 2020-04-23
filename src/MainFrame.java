@@ -75,9 +75,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
                 String tripMonth = weatherPanel.getMonthSelected();
                 double idealTemp = weatherPanel.getIdealTemp();
-                double weatherPreference = weatherPanel.getWeatherPreference();
-                double sitePreference = sitePanel.getSitePreference();
-                double costPreference = costPanel.getCostPreference();
+                double weatherPreference = weatherPanel.getUserPreference();
+                double sitePreference = sitePanel.getUserPreference();
+                double costPreference = costPanel.getUserPreference();
                 
                 CountryAnalysis ca = new CountryAnalysis();
                 ArrayList<CountryScore> cs = ca.applyWeights(sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
@@ -90,12 +90,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
                 }
                 
-//                System.out.println("Trip month: " + tripMonth);
-//                System.out.println("Ideal temp: " + idealTemp);
-//                System.out.println("Weather preference: " + weatherPreference);
-//                System.out.println("Site preference: " + sitePreference);
-//                System.out.println("Cost preference: " + costPreference);
-//                System.out.println("topN = " + topN);
+                System.out.println("Trip month: " + tripMonth);
+                System.out.println("Ideal temp: " + idealTemp);
+                System.out.println("Weather preference: " + weatherPreference);
+                System.out.println("Site preference: " + sitePreference);
+                System.out.println("Cost preference: " + costPreference);
+                System.out.println("topN = " + topN);
 
                 
             }

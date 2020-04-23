@@ -11,33 +11,13 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class CostPanel extends JPanel 
-                       implements ChangeListener {
-
-    private double costPreference;
-    private static int SLIDER_MIN = 0;
-    private static int SLIDER_MAX = 100;
-    private static int SLIDER_INIT = 0;
-    
-    public double getCostPreference() {
-        return costPreference;
-    }
+public class CostPanel extends TripComponentPanel {    
 
     /**
      * Create the panel.
      */
     public CostPanel() {
-        
-        // Set size
-        setPreferredSize(new Dimension(500, 133));
-        
-        // Set title
-        setBorder(BorderFactory.createTitledBorder("Cost Preference"));
-                
-        // Set layout
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWeights = new double[]{0.0};
-        setLayout(gridBagLayout);
+        super("Cost Preference", 133);
         
         //// First Row /////////////////////////////////
 
@@ -50,13 +30,11 @@ public class CostPanel extends JPanel
         
         //// Second Row /////////////////////////////////
 
-        JSlider slider = new JSlider(JSlider.HORIZONTAL,
-                SLIDER_MIN, SLIDER_MAX, SLIDER_INIT);
-        slider.setMajorTickSpacing(25);
-        slider.setMinorTickSpacing(5);
-        slider.setPaintTicks(true);
-        slider.setPaintLabels(true);
-        slider.addChangeListener(this);
+        slider = new StandardSlider();
+        String left = "Strict budget";
+        String mid = "Got some wiggle room";
+        String right = "Looking to ball out";
+        slider.setUpSlider(left, mid, right);
         
         GridBagConstraints gbc_slider = new GridBagConstraints();
         gbc_slider.fill = GridBagConstraints.HORIZONTAL;
@@ -66,13 +44,4 @@ public class CostPanel extends JPanel
         add(slider, gbc_slider);
     }
 
-    @Override
-    public void stateChanged(ChangeEvent e) {
-
-        JSlider source = (JSlider) e.getSource();
-        if (!source.getValueIsAdjusting()) {
-            costPreference = (double) source.getValue();
-        }
-        
-    }
 }

@@ -10,35 +10,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import java.awt.Insets;
+import java.util.Hashtable;
 
-public class SitePanel extends JPanel 
-                       implements ChangeListener {
-
-    
-    private double sitePreference;
-    private static int SLIDER_MIN = 0;
-    private static int SLIDER_MAX = 100;
-    private static int SLIDER_INIT = 0;
-    
-    public double getSitePreference() {
-        return sitePreference;
-    }
+public class SitePanel extends TripComponentPanel {
 
     /**
      * Create the panel.
      */
     public SitePanel() {
         
-        // Set size
-        setPreferredSize(new Dimension(500, 133));
-        
-        // Set title
-        setBorder(BorderFactory.createTitledBorder("Sites Preference"));
-                
-        // Set layout
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWeights = new double[]{0.0};
-        setLayout(gridBagLayout);
+        super("Sites Preference", 133);
         
         //// First Row /////////////////////////////////
 
@@ -51,13 +32,11 @@ public class SitePanel extends JPanel
         
         //// Second Row /////////////////////////////////
 
-        JSlider slider = new JSlider(JSlider.HORIZONTAL,
-                SLIDER_MIN, SLIDER_MAX, SLIDER_INIT);
-        slider.setMajorTickSpacing(25);
-        slider.setMinorTickSpacing(5);
-        slider.setPaintTicks(true);
-        slider.setPaintLabels(true);
-        slider.addChangeListener(this);
+        slider = new StandardSlider();
+        String left = "What is culture?";
+        String mid = "I guess I should care about culture";
+        String right = "Culture nerd and proud!";
+        slider.setUpSlider(left, mid, right);
         
         GridBagConstraints gbc_slider = new GridBagConstraints();
         gbc_slider.fill = GridBagConstraints.HORIZONTAL;
@@ -66,16 +45,6 @@ public class SitePanel extends JPanel
         gbc_slider.gridy = 1;
         add(slider, gbc_slider);
 
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-
-        JSlider source = (JSlider) e.getSource();
-        if (!source.getValueIsAdjusting()) {
-            sitePreference = (double) source.getValue();
-        }
-        
     }
 
 }
