@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 public class MainFrame extends JFrame implements ActionListener {
@@ -59,6 +60,9 @@ public class MainFrame extends JFrame implements ActionListener {
         topN_ComboBox = new JComboBox<>(topN_choices);
         topN_ComboBox.addActionListener(this);
         GridBagConstraints gbc_topN_ComboBox = new GridBagConstraints();
+        
+        JTextArea recDisplay = new JTextArea();
+        GridBagConstraints gbc_recDisplay = new GridBagConstraints();
 
         runBtn = new JButton("Run");
         GridBagConstraints gbc_runBtn = new GridBagConstraints();
@@ -79,6 +83,13 @@ public class MainFrame extends JFrame implements ActionListener {
                 ArrayList<CountryScore> cs = ca.applyWeights(sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
                 ca.sortCountriesByTotalScore(cs, topN);
                 
+                recDisplay.append("Rank      Country        Number of Sites     Cost of Living      Average Temperature \n");
+                recDisplay.append("------------------------------------------------------------------------------------ \n");
+                for (int i = 1; i <= topN; i++) {
+                    recDisplay.append(i + ".        " + cs.get(i - 1).getName() + "\n");
+
+                }
+                
 //                System.out.println("Trip month: " + tripMonth);
 //                System.out.println("Ideal temp: " + idealTemp);
 //                System.out.println("Weather preference: " + weatherPreference);
@@ -89,7 +100,6 @@ public class MainFrame extends JFrame implements ActionListener {
                 
             }
         });
-
 
         // Add Swing components to content pane
         Container c = getContentPane();
@@ -155,6 +165,13 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_runBtn.anchor = GridBagConstraints.CENTER;
         c.add(runBtn, gbc_runBtn);
         
+        // Fifth row, first column: Display
+        
+        gbc_recDisplay.gridx = 0;
+        gbc_recDisplay.gridy = 4;
+        gbc_recDisplay.gridwidth = 4;
+        gbc_recDisplay.weighty = 0.5;
+        c.add(recDisplay, gbc_recDisplay);
 
     }
 
