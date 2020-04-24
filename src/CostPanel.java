@@ -31,9 +31,9 @@ public class CostPanel extends TripComponentPanel {
         //// Second Row /////////////////////////////////
 
         slider = new StandardSlider();
-        String left = "Strict budget";
+        String left = "Looking to ball out";
         String mid = "Got some wiggle room";
-        String right = "Looking to ball out";
+        String right = "Strict budget";
         slider.setUpSlider(left, mid, right);
         
         GridBagConstraints gbc_slider = new GridBagConstraints();

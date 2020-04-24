@@ -11,7 +11,7 @@ public class FileReader {
 	 * @param month
 	 * @return
 	 */
-	public ArrayList<Country> readCSV(String month) {
+	public static ArrayList<Country> readCSV(String month) {
 
 		ArrayList<Country> countries = new ArrayList<Country>();
 		File countryFile = new File("master.csv");
