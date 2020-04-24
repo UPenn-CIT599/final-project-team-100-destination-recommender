@@ -51,7 +51,7 @@ public class FileReader {
 				} else if (month.equals("December")) {
 					monthTemperature = Double.parseDouble(lineComponents[14]);
 				}
-				Country country = new Country(name, numSites, costOfLiving, monthTemperature);
+				Country country = new Country(name, numSites, costOfLiving, monthTemperature, 0, 0, 0, 0);
 				countries.add(country);
 			}
 			fileReader.close();

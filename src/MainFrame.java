@@ -79,21 +79,15 @@ public class MainFrame extends JFrame implements ActionListener {
                 if (topN == 0) topN = 1; //in case user does not change topN, defaults to 1
                 
                 CountryAnalysis ca = new CountryAnalysis();
-                ArrayList<CountryScore> cs = ca.applyWeights(sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
-                ca.sortCountriesByTotalScore(cs, topN);
-                ArrayList<Country> countries = FileReader.readCSV(tripMonth);
+                ArrayList<Country> topCountries = ca.applyWeights(sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
                 
                 for (int i = 0; i < topN; i++) {
                     int index = i + 1;
-                    data[i][0] = index + ".";
-                    for (int j = 0; j < countries.size(); j++) {
-                        if (cs.get(i).getName().equals(countries.get(j).getName())) {                          
-                            data[i][1] = cs.get(i).getName();
-                            new Double((double) (data[i][2] = countries.get(j).getNumSites()));
-                            new Double((double) (data[i][3] = countries.get(j).getCostOfLiving()));
-                            data[i][4] = countries.get(j).getMonthTemperature() + " ºF";
-                        }
-                    }
+                    data[i][0] = index + ".";                         
+                    data[i][1] = topCountries.get(i).getName();
+                    new Double((double) (data[i][2] = topCountries.get(i).getNumSites()));
+                    new Double((double) (data[i][3] = topCountries.get(i).getCostOfLiving()));
+                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";
                 }
                 
                 scrollPane.setVisible(true);
