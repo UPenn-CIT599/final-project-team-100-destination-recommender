@@ -1,5 +1,9 @@
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.metal.DefaultMetalTheme;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 
 public class UserInterface {
 
@@ -8,6 +12,24 @@ public class UserInterface {
      * @param args
      */
     public static void main(String[] args) {
+        
+//        try {
+//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//            MetalLookAndFeel.setCurrentTheme(new CustomTheme());
+//        } catch (ClassNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (UnsupportedLookAndFeelException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+        
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

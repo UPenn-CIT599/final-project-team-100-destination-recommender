@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -14,9 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import com.sun.org.glassfish.external.statistics.annotations.Reset;
+
 
 public class MainFrame extends JFrame implements ActionListener {
    
@@ -41,10 +42,12 @@ public class MainFrame extends JFrame implements ActionListener {
         GridBagConstraints gbc_costPanel = new GridBagConstraints();
         
         JLabel topN_QuestionStart = new JLabel("Show top");
+        topN_QuestionStart.setForeground(Color.white);
         GridBagConstraints gbc_topN_QuestionStart = new GridBagConstraints();
         
         JLabel topN_QuestionEnd = new JLabel("results");
         GridBagConstraints gbc_topN_QuestionEnd = new GridBagConstraints();
+        topN_QuestionEnd.setForeground(Color.white);
 
         Integer[] topN_choices = { 1, 2, 3, 4, 5 };
         JComboBox<Integer> topN_ComboBox = new JComboBox<>(topN_choices);
@@ -90,7 +93,8 @@ public class MainFrame extends JFrame implements ActionListener {
                 if (topN == 0) topN = 1; //in case user does not change topN, defaults to 1
                 
                 CountryAnalysis ca = new CountryAnalysis();
-                ArrayList<Country> topCountries = ca.applyWeights(FileReader.readCSV(tripMonth), sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
+                ArrayList<Country> topCountries = ca.applyWeights(FileReader.readCSV(tripMonth),
+                        sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
                 
                 for (int i = 0; i < topN; i++) {
                     int index = i + 1;
@@ -98,7 +102,7 @@ public class MainFrame extends JFrame implements ActionListener {
                     data[i][1] = topCountries.get(i).getName();
                     new Double((double) (data[i][2] = topCountries.get(i).getNumSites()));
                     new Double((double) (data[i][3] = topCountries.get(i).getCostOfLiving()));
-                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ÂºF";   
+                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
                 }
                 
                 if (model.getRowCount() == 0) {
@@ -149,6 +153,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         // Add Swing components to content pane
         Container c = getContentPane();
+        c.setBackground(new Color(24, 42, 206));
         
         // Row 1, Col 1-4: Weather Panel
         

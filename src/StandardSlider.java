@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.Hashtable;
 
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ public class StandardSlider extends JSlider implements ChangeListener {
     
     public StandardSlider() {
         super(JSlider.HORIZONTAL, SLIDER_MIN, SLIDER_MAX, SLIDER_INIT);
+        setBackground(new Color(245, 233, 67));
     }
     
     /**

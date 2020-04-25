@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
@@ -34,6 +35,9 @@ public class TripComponentPanel extends JPanel {
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWeights = new double[]{1.0};
         setLayout(gridBagLayout);
+        
+        // Set color
+        setBackground(new Color(245, 233, 67));
         
     }
 
