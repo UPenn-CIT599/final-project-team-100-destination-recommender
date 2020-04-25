@@ -123,6 +123,9 @@ public class MainFrame extends JFrame implements ActionListener {
                 System.out.println("Cost preference: " + costPreference);
                 System.out.println("topN = " + topN);
 
+                for (int i = 0; i < topN; i++) {
+                    System.out.println(i + ". " + topCountries.get(i).getTotalScore());
+                }
                 
             }
         });
@@ -235,7 +238,6 @@ public class MainFrame extends JFrame implements ActionListener {
         c.add(scrollPane, gbc_resultsTable);
 
     }
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
