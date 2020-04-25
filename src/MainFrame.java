@@ -16,6 +16,8 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import com.sun.org.glassfish.external.statistics.annotations.Reset;
+
 public class MainFrame extends JFrame implements ActionListener {
    
     private int topN;
@@ -50,6 +52,7 @@ public class MainFrame extends JFrame implements ActionListener {
         GridBagConstraints gbc_topN_ComboBox = new GridBagConstraints();
         
         JTextArea recDisplay = new JTextArea("Results will show here...");
+        recDisplay.setSize(300, 200);
         GridBagConstraints gbc_recDisplay = new GridBagConstraints();
         
         String[] columnNames = { "Rank", "Country", "Number of Sites", "Cost of Living", "Average Temperature" };
@@ -61,13 +64,17 @@ public class MainFrame extends JFrame implements ActionListener {
         
         resultsTable.setPreferredScrollableViewportSize(new Dimension(585, 80));
         resultsTable.setFillsViewportHeight(true);
-        resultsTable.setVisible(false);
         JScrollPane scrollPane = new JScrollPane(resultsTable);
         scrollPane.setVisible(false);
         GridBagConstraints gbc_resultsTable = new GridBagConstraints();
 
         JButton runBtn = new JButton("Run");
         GridBagConstraints gbc_runBtn = new GridBagConstraints();
+        
+        JButton resetBtn = new JButton("Reset");
+        GridBagConstraints gbc_resetBtn = new GridBagConstraints();
+        resetBtn.setEnabled(false);
+        
         runBtn.addActionListener(new ActionListener() {
             
             /**
@@ -104,10 +111,10 @@ public class MainFrame extends JFrame implements ActionListener {
                     }
                 }
                 
-                resultsTable.setVisible(true);
-                
                 scrollPane.setVisible(true);
                 recDisplay.setVisible(false);
+                runBtn.setEnabled(false);
+                resetBtn.setEnabled(true);
                 
                 System.out.println("Trip month: " + tripMonth);
                 System.out.println("Ideal temp: " + idealTemp);
@@ -120,8 +127,6 @@ public class MainFrame extends JFrame implements ActionListener {
             }
         });
         
-        JButton resetBtn = new JButton("Reset");
-        GridBagConstraints gbc_resetBtn = new GridBagConstraints();
         resetBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
@@ -130,13 +135,14 @@ public class MainFrame extends JFrame implements ActionListener {
                     scrollPane.setVisible(false);
                     DefaultTableModel model = (DefaultTableModel) resultsTable.getModel();
                     model.setRowCount(0);
-                    recDisplay.setVisible(true);
                 }
+                
+                runBtn.setEnabled(true);
+                resetBtn.setEnabled(false);
                 
             }
             
         });
-        
 
         // Add Swing components to content pane
         Container c = getContentPane();
@@ -146,7 +152,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_weatherPanel.gridx = 0;
         gbc_weatherPanel.gridwidth = 4;
         gbc_weatherPanel.gridy = 0;
-        gbc_weatherPanel.weighty = 0.3;
+        gbc_weatherPanel.weighty = 0.2;
         c.add(weatherPanel, gbc_weatherPanel);
         
         // Row 2, Col 1-4: Sites Panel
@@ -154,7 +160,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_sitesPanel.gridx = 0;
         gbc_sitesPanel.gridwidth = 4;
         gbc_sitesPanel.gridy = 1;
-        gbc_sitesPanel.weighty = 0.25;
+        gbc_sitesPanel.weighty = 0.15;
         c.add(sitePanel, gbc_sitesPanel);
         
         // Row 3, Col 1-4: Cost Panel
@@ -162,7 +168,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_costPanel.gridx = 0;
         gbc_costPanel.gridwidth = 4;
         gbc_costPanel.gridy = 2;
-        gbc_costPanel.weighty = 0.25;
+        gbc_costPanel.weighty = 0.15;
         c.add(costPanel, gbc_costPanel);
         
         // Row 4-5, Col 1: Question label start
@@ -171,7 +177,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_topN_QuestionStart.gridy = 3;
         gbc_topN_QuestionStart.gridheight = 2;
         gbc_topN_QuestionStart.weightx = 0.5;
-        gbc_topN_QuestionStart.weighty = 0.2;
+        gbc_topN_QuestionStart.weighty = 0.1;
         gbc_topN_QuestionStart.anchor = GridBagConstraints.EAST;
         c.add(topN_QuestionStart, gbc_topN_QuestionStart);
         
@@ -181,7 +187,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_topN_ComboBox.gridy = 3;
         gbc_topN_ComboBox.gridheight = 2;
         gbc_topN_ComboBox.weightx = 0.5;
-        gbc_topN_ComboBox.weighty = 0.2;
+        gbc_topN_ComboBox.weighty = 0.1;
         gbc_topN_ComboBox.anchor = GridBagConstraints.CENTER;
         c.add(topN_ComboBox, gbc_topN_ComboBox);
         
@@ -191,7 +197,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_topN_QuestionEnd.gridy = 3;
         gbc_topN_QuestionEnd.gridheight = 2;
         gbc_topN_QuestionEnd.weightx = 0.5;
-        gbc_topN_QuestionEnd.weighty = 0.2;
+        gbc_topN_QuestionEnd.weighty = 0.1;
         gbc_topN_QuestionEnd.anchor = GridBagConstraints.WEST;
         c.add(topN_QuestionEnd, gbc_topN_QuestionEnd);
         
@@ -200,7 +206,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_runBtn.gridx = 3;
         gbc_runBtn.gridy = 3;
         gbc_runBtn.weightx = 2;
-        gbc_runBtn.weighty = 0.1;
+        gbc_runBtn.weighty = 0.05;
         gbc_runBtn.anchor = GridBagConstraints.CENTER;
         c.add(runBtn, gbc_runBtn);
         
@@ -208,7 +214,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         gbc_resetBtn.gridx = 3;
         gbc_resetBtn.gridy = 4;
-        gbc_resetBtn.weighty = 0.1;
+        gbc_resetBtn.weighty = 0.05;
         gbc_resetBtn.anchor = GridBagConstraints.CENTER;
         c.add(resetBtn, gbc_resetBtn);
         
@@ -217,18 +223,19 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_recDisplay.gridx = 0;
         gbc_recDisplay.gridy = 5;
         gbc_recDisplay.gridwidth = 4;
-        gbc_recDisplay.weighty = 0.5;
+        gbc_recDisplay.weighty = 1.3;
         c.add(recDisplay, gbc_recDisplay);
         
-        // Row 7, Col 1-4: Results Table
+        // Row 6, Col 1-4: Results Table
         
         gbc_resultsTable.gridx = 0;
-        gbc_resultsTable.gridy = 6;
+        gbc_resultsTable.gridy = 5;
         gbc_resultsTable.gridwidth = 4;
-        gbc_resultsTable.weighty = 0.5;
-        c.add(scrollPane, gbc_recDisplay);
+        gbc_resultsTable.weighty = 1.3;
+        c.add(scrollPane, gbc_resultsTable);
 
     }
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
