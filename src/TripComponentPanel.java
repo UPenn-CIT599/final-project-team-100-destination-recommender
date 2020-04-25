@@ -12,7 +12,8 @@ import javax.swing.JPanel;
  */
 public class TripComponentPanel extends JPanel {
     
-    protected StandardSlider slider = new StandardSlider();
+    protected StandardSlider slider;
+    private static Color panelColor = new Color(205, 230, 249);
     
     /**
      * Accesses the slider's value to return user preference
@@ -21,6 +22,10 @@ public class TripComponentPanel extends JPanel {
      */
     public double getUserPreference() {        
         return slider.getPreference();
+    }
+    
+    public static Color getPanelColor() {
+        return panelColor;
     }
     
     public TripComponentPanel(String title, int height) {
@@ -37,7 +42,7 @@ public class TripComponentPanel extends JPanel {
         setLayout(gridBagLayout);
         
         // Set color
-        setBackground(new Color(245, 233, 67));
+        setBackground(panelColor);
         
     }
 

@@ -20,10 +20,15 @@ public class WeatherPanel extends TripComponentPanel
      */
     private String[] months = { "January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December" };
+    private JComboBox<String[]> monthComboBox;
     private String monthSelected;
         
-    private JTextField tempTextField;
     private JSpinner tempSpinner;
+    private JTextField tempTextField;
+    
+    public JComboBox<String[]> getMonthComboBox() {
+        return monthComboBox;
+    }
     
     public String getMonthSelected() {
         if (monthSelected == null) {
@@ -31,6 +36,14 @@ public class WeatherPanel extends TripComponentPanel
         } 
         
         return monthSelected;
+    }
+    
+    public JSpinner getTempSpinner() {
+        return tempSpinner;
+    }
+    
+    public JTextField getTempTextField() {
+        return tempTextField;
     }
     
     public double getIdealTemp() {
@@ -73,7 +86,7 @@ public class WeatherPanel extends TripComponentPanel
         
         // Row 2, Col 1: Month ComboBox /////////////////////////////////
             
-        JComboBox<String[]> monthComboBox = new JComboBox(months);
+        monthComboBox = new JComboBox(months);
         monthComboBox.setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
         monthComboBox.addActionListener(this);
         
@@ -91,7 +104,7 @@ public class WeatherPanel extends TripComponentPanel
                                                               134, // max temp, set to max temp recorded on Earth
                                                               1); // step size
         tempSpinner = new JSpinner(tempModel);
-        JFormattedTextField tempTextField = ((JSpinner.DefaultEditor) tempSpinner.getEditor()).getTextField();
+        tempTextField = ((JSpinner.DefaultEditor) tempSpinner.getEditor()).getTextField();
         tempTextField.setEditable(false);
         tempTextField.setBackground(Color.white);
         
@@ -115,7 +128,7 @@ public class WeatherPanel extends TripComponentPanel
         String left = "Not important";
         String mid = "Kinda important";
         String right = "Very important";
-        slider.setUpSlider(left, mid, right);
+        slider = new StandardSlider(left, mid, right);
         
         GridBagConstraints gbc_slider = new GridBagConstraints();
         gbc_slider.fill = GridBagConstraints.HORIZONTAL;

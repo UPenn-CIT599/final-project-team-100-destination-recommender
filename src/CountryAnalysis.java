@@ -9,9 +9,9 @@ public class CountryAnalysis {
 	/**
 	 * df1, df2, df3 used to format decimals in output
 	 */
-	private static final DecimalFormat df1 = new DecimalFormat("#.##");
-	private static final DecimalFormat df2 = new DecimalFormat("#.00");
-	private static final DecimalFormat df3 = new DecimalFormat("#.0");
+	static final DecimalFormat df1 = new DecimalFormat("#.##");
+	static final DecimalFormat df2 = new DecimalFormat("#.00");
+	static final DecimalFormat df3 = new DecimalFormat("#.0");
 
 	/**
 	 * applies the weights given the user Input from the GUI
