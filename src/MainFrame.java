@@ -90,7 +90,7 @@ public class MainFrame extends JFrame implements ActionListener {
                 if (topN == 0) topN = 1; //in case user does not change topN, defaults to 1
                 
                 CountryAnalysis ca = new CountryAnalysis();
-                ArrayList<Country> topCountries = ca.applyWeights(sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
+                ArrayList<Country> topCountries = ca.applyWeights(FileReader.readCSV(tripMonth), sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
                 
                 for (int i = 0; i < topN; i++) {
                     int index = i + 1;
@@ -98,7 +98,7 @@ public class MainFrame extends JFrame implements ActionListener {
                     data[i][1] = topCountries.get(i).getName();
                     new Double((double) (data[i][2] = topCountries.get(i).getNumSites()));
                     new Double((double) (data[i][3] = topCountries.get(i).getCostOfLiving()));
-                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
+                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ÂºF";   
                 }
                 
                 if (model.getRowCount() == 0) {
