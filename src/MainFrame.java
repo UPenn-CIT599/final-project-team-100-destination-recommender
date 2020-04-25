@@ -102,7 +102,7 @@ public class MainFrame extends JFrame implements ActionListener {
                     data[i][1] = topCountries.get(i).getName();
                     new Double((double) (data[i][2] = topCountries.get(i).getNumSites()));
                     new Double((double) (data[i][3] = topCountries.get(i).getCostOfLiving()));
-                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
+                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ï¿½F";   
                 }
                 
                 if (model.getRowCount() == 0) {
@@ -244,6 +244,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
     }
 
+    // Test Comment
+    
     @Override
     public void actionPerformed(ActionEvent e) {
 
