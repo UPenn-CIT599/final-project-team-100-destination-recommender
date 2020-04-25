@@ -243,8 +243,6 @@ public class MainFrame extends JFrame implements ActionListener {
         c.add(scrollPane, gbc_resultsTable);
 
     }
-
-    // Test Comment
     
     @Override
     public void actionPerformed(ActionEvent e) {
