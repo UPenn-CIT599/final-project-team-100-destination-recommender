@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class MainFrame extends JFrame implements ActionListener {
    
@@ -47,20 +49,22 @@ public class MainFrame extends JFrame implements ActionListener {
         topN_ComboBox.addActionListener(this);
         GridBagConstraints gbc_topN_ComboBox = new GridBagConstraints();
         
-        JTextArea recDisplay = new JTextArea("Results will show here");
+        JTextArea recDisplay = new JTextArea("Results will show here...");
         GridBagConstraints gbc_recDisplay = new GridBagConstraints();
         
         String[] columnNames = { "Rank", "Country", "Number of Sites", "Cost of Living", "Average Temperature" };
         Object[][] data = new Object[5][5];
-        JTable resultsTable = new JTable(data, columnNames);
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        JTable resultsTable = new JTable(model);
+        resultsTable.setModel(model);
         resultsTable.getColumnModel().getColumn(0).setPreferredWidth(15);
         
         resultsTable.setPreferredScrollableViewportSize(new Dimension(585, 80));
         resultsTable.setFillsViewportHeight(true);
+        resultsTable.setVisible(false);
         JScrollPane scrollPane = new JScrollPane(resultsTable);
         scrollPane.setVisible(false);
         GridBagConstraints gbc_resultsTable = new GridBagConstraints();
-
 
         JButton runBtn = new JButton("Run");
         GridBagConstraints gbc_runBtn = new GridBagConstraints();
@@ -87,8 +91,20 @@ public class MainFrame extends JFrame implements ActionListener {
                     data[i][1] = topCountries.get(i).getName();
                     new Double((double) (data[i][2] = topCountries.get(i).getNumSites()));
                     new Double((double) (data[i][3] = topCountries.get(i).getCostOfLiving()));
-                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";
+                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
                 }
+                
+                if (model.getRowCount() == 0) {
+                    model.setRowCount(5);
+                }
+                
+                for (int i = 0; i < topN; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        resultsTable.setValueAt(data[i][j], i, j);
+                    }
+                }
+                
+                resultsTable.setVisible(true);
                 
                 scrollPane.setVisible(true);
                 recDisplay.setVisible(false);
@@ -103,6 +119,24 @@ public class MainFrame extends JFrame implements ActionListener {
                 
             }
         });
+        
+        JButton resetBtn = new JButton("Reset");
+        GridBagConstraints gbc_resetBtn = new GridBagConstraints();
+        resetBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+                
+                if (scrollPane.isVisible()) {
+                    scrollPane.setVisible(false);
+                    DefaultTableModel model = (DefaultTableModel) resultsTable.getModel();
+                    model.setRowCount(0);
+                    recDisplay.setVisible(true);
+                }
+                
+            }
+            
+        });
+        
 
         // Add Swing components to content pane
         Container c = getContentPane();
@@ -131,55 +165,65 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_costPanel.weighty = 0.25;
         c.add(costPanel, gbc_costPanel);
         
-        // Row 4, Col 1: Question label start
+        // Row 4-5, Col 1: Question label start
         
         gbc_topN_QuestionStart.gridx = 0;
         gbc_topN_QuestionStart.gridy = 3;
+        gbc_topN_QuestionStart.gridheight = 2;
         gbc_topN_QuestionStart.weightx = 0.5;
         gbc_topN_QuestionStart.weighty = 0.2;
         gbc_topN_QuestionStart.anchor = GridBagConstraints.EAST;
         c.add(topN_QuestionStart, gbc_topN_QuestionStart);
         
-        // Row 4, Col 2: topN ComboBox
+        // Row 4-5, Col 2: topN ComboBox
         
         gbc_topN_ComboBox.gridx = 1;
         gbc_topN_ComboBox.gridy = 3;
+        gbc_topN_ComboBox.gridheight = 2;
         gbc_topN_ComboBox.weightx = 0.5;
         gbc_topN_ComboBox.weighty = 0.2;
         gbc_topN_ComboBox.anchor = GridBagConstraints.CENTER;
         c.add(topN_ComboBox, gbc_topN_ComboBox);
         
-        // Row 4, Col 3: Question label end
+        // Row 4-5, Col 3: Question label end
         
         gbc_topN_QuestionEnd.gridx = 2;
         gbc_topN_QuestionEnd.gridy = 3;
+        gbc_topN_QuestionEnd.gridheight = 2;
         gbc_topN_QuestionEnd.weightx = 0.5;
         gbc_topN_QuestionEnd.weighty = 0.2;
         gbc_topN_QuestionEnd.anchor = GridBagConstraints.WEST;
         c.add(topN_QuestionEnd, gbc_topN_QuestionEnd);
-
         
         // Row 4, Col 4: Run Button
         
         gbc_runBtn.gridx = 3;
         gbc_runBtn.gridy = 3;
         gbc_runBtn.weightx = 2;
-        gbc_runBtn.weighty = 0.2;
+        gbc_runBtn.weighty = 0.1;
         gbc_runBtn.anchor = GridBagConstraints.CENTER;
         c.add(runBtn, gbc_runBtn);
         
-        // Row 5, Col 1-4: Display Place Holder
+        // Row 5, Col 4: Reset Button
+
+        gbc_resetBtn.gridx = 3;
+        gbc_resetBtn.gridy = 4;
+        gbc_resetBtn.weighty = 0.1;
+        gbc_resetBtn.anchor = GridBagConstraints.CENTER;
+        c.add(resetBtn, gbc_resetBtn);
+        
+        // Row 6, Col 1-4: Display Place Holder
         
         gbc_recDisplay.gridx = 0;
-        gbc_recDisplay.gridy = 4;
+        gbc_recDisplay.gridy = 5;
         gbc_recDisplay.gridwidth = 4;
         gbc_recDisplay.weighty = 0.5;
         c.add(recDisplay, gbc_recDisplay);
         
-        // Row 6, Col 1-4: Results Table
+        // Row 7, Col 1-4: Results Table
         
         gbc_resultsTable.gridx = 0;
-        gbc_resultsTable.gridy = 5;
+        gbc_resultsTable.gridy = 6;
         gbc_resultsTable.gridwidth = 4;
         gbc_resultsTable.weighty = 0.5;
         c.add(scrollPane, gbc_recDisplay);
