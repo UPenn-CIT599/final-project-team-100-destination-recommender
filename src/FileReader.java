@@ -15,6 +15,7 @@ public class FileReader {
 
 		ArrayList<Country> countries = new ArrayList<Country>();
 		File countryFile = new File("master.csv");
+		
 
 		try {
 			Scanner fileReader = new Scanner(countryFile);
@@ -51,7 +52,9 @@ public class FileReader {
 				} else if (month.equals("December")) {
 					monthTemperature = Double.parseDouble(lineComponents[14]);
 				}
-				Country country = new Country(name, numSites, costOfLiving, monthTemperature, 0, 0, 0, 0);
+
+
+				Country country = new Country(name, numSites, costOfLiving, monthTemperature, 0);
 				countries.add(country);
 			}
 			fileReader.close();
