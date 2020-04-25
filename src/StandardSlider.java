@@ -8,8 +8,8 @@ import javax.swing.event.ChangeListener;
 
 public class StandardSlider extends JSlider implements ChangeListener {
     
-    static final int SLIDER_MIN = 0;
-    static final int SLIDER_MAX = 100;
+    static final int SLIDER_MIN = -50;
+    static final int SLIDER_MAX = 50;
     static final int SLIDER_INIT = 0;
     
     private double preference;
@@ -22,19 +22,21 @@ public class StandardSlider extends JSlider implements ChangeListener {
      * @param mid tick label at 50
      * @param right tick label at 100
      */
-    public StandardSlider(String left, String mid, String right) {
-        super(JSlider.HORIZONTAL, SLIDER_MIN, SLIDER_MAX, SLIDER_INIT);
+    public StandardSlider(int min, int max, String left, String mid, String right) {
+        super(JSlider.HORIZONTAL, min, max, (min + max) / 2);
         setBackground(TripComponentPanel.getPanelColor());
         
-        setMajorTickSpacing(SLIDER_MAX / 2);
+        int tickSpacing = max / 2; // defaults ticks at 0, mid, and max
+        if (min + max == 0) tickSpacing = max; // if min and max centered around 0, then shows ticks at min, max, and mid (0)
+        setMajorTickSpacing(tickSpacing);
         setPaintTicks(true);
         setPaintLabels(true);
         addChangeListener(this);
         
         Hashtable labelTable = new Hashtable();
-        labelTable.put(new Integer(SLIDER_MIN), new JLabel(left));
-        labelTable.put(new Integer(SLIDER_MAX / 2), new JLabel(mid));
-        labelTable.put(new Integer(SLIDER_MAX), new JLabel(right));
+        labelTable.put(new Integer(min), new JLabel(left));
+        labelTable.put(new Integer((min + max) / 2), new JLabel(mid));
+        labelTable.put(new Integer(max), new JLabel(right));
         setLabelTable(labelTable);
     }
     

@@ -26,6 +26,7 @@ import com.sun.org.glassfish.external.statistics.annotations.Reset;
 public class MainFrame extends JFrame implements ActionListener {
    
     private int topN;
+    private int count;
     private static Color mainFrameColor = new Color(141, 185, 219);
 
     public MainFrame(String title) {
@@ -63,11 +64,12 @@ public class MainFrame extends JFrame implements ActionListener {
         topN_ComboBox.addActionListener(this);
         GridBagConstraints gbc_topN_ComboBox = new GridBagConstraints();
         
-        JTextArea recDisplay = new JTextArea("Results will show here...");
-        recDisplay.setFont(new Font("Dialog", Font.ITALIC, 24));
-        recDisplay.setBackground(mainFrameColor);
-        recDisplay.setSize(300, 200);
-        GridBagConstraints gbc_recDisplay = new GridBagConstraints();
+        JTextArea placeHolder = new JTextArea("Results will show here...");
+        placeHolder.setFont(new Font("Dialog", Font.ITALIC, 24));
+        placeHolder.setBackground(mainFrameColor);
+        placeHolder.setSize(300, 200);
+        placeHolder.setEditable(false);
+        GridBagConstraints gbc_placeHolder = new GridBagConstraints();
         
         String[] columnNames = { "Rank", "Country", "Number of Sites", "Cost of Living", "Average Temperature" };
         Object[][] data = new Object[5][5];
@@ -76,13 +78,15 @@ public class MainFrame extends JFrame implements ActionListener {
         resultsTable.setModel(model);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-    
 
         resultsTable.getColumnModel().getColumn(0).setPreferredWidth(15);
         for (int i = 0; i < 5; i++) {
             resultsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         
+        JLabel rec = new JLabel("We recommend the following destinations:");
+        GridBagConstraints gbc_rec = new GridBagConstraints();
+        rec.setVisible(false);
         
         resultsTable.setPreferredScrollableViewportSize(new Dimension(585, 80));
         resultsTable.setFillsViewportHeight(true);
@@ -91,9 +95,12 @@ public class MainFrame extends JFrame implements ActionListener {
         GridBagConstraints gbc_resultsTable = new GridBagConstraints();
 
         JButton runBtn = new JButton("Run");
+        runBtn.setPreferredSize(new Dimension(70, 25));
         GridBagConstraints gbc_runBtn = new GridBagConstraints();
         
         JButton resetBtn = new JButton("Reset");
+        resetBtn.setPreferredSize(new Dimension(70, 25));
+
         GridBagConstraints gbc_resetBtn = new GridBagConstraints();
         resetBtn.setEnabled(false);
         
@@ -108,7 +115,7 @@ public class MainFrame extends JFrame implements ActionListener {
                 double idealTemp = weatherPanel.getIdealTemp();
                 double weatherPreference = weatherPanel.getUserPreference();
                 double sitePreference = sitePanel.getUserPreference();
-                double costPreference = costPanel.getUserPreference();
+                double costPreference = -1 * costPanel.getUserPreference();
                 if (topN == 0) topN = 1; //in case user does not change topN, defaults to 1
                 
                 CountryAnalysis ca = new CountryAnalysis();
@@ -120,7 +127,6 @@ public class MainFrame extends JFrame implements ActionListener {
                     data[i][0] = i + 1;                         
                     data[i][1] = topCountries.get(i).getName();
                     new Double((double) (data[i][2] = topCountries.get(i).getNumSites()));
-
                     data[i][3] = CountryAnalysis.df1.format(topCountries.get(i).getCostOfLiving());
                     data[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
 
@@ -136,8 +142,9 @@ public class MainFrame extends JFrame implements ActionListener {
                     }
                 }
                 
+                rec.setVisible(true);
                 scrollPane.setVisible(true);
-                recDisplay.setVisible(false);
+                placeHolder.setVisible(false);
                 runBtn.setEnabled(false);
                 resetBtn.setEnabled(true);
                 
@@ -147,12 +154,21 @@ public class MainFrame extends JFrame implements ActionListener {
                 System.out.println("Site preference: " + sitePreference);
                 System.out.println("Cost preference: " + costPreference);
                 System.out.println("topN = " + topN);
-                System.out.println(recDisplay.getFont());
+                System.out.println(placeHolder.getFont());
 
                 for (int i = 0; i < topN; i++) {
-                    System.out.println(i + ". " + topCountries.get(i).getTotalScore());
+                    System.out.println((i + 1) + ". " + topCountries.get(i).getTotalScore());
                 }
                 
+                if (count == 3) {
+                    placeHolder.setText("Really enjoying this trip recommender, huh?");
+                } else if (count == 4) {
+                    placeHolder.setText("You should consider giving team 100 a 100 :)");
+                } else {
+                    placeHolder.setText("                                         ");
+                }
+                
+                count++;
             }
         });
         
@@ -160,17 +176,20 @@ public class MainFrame extends JFrame implements ActionListener {
 
             public void actionPerformed(ActionEvent arg0) {
 
+                rec.setVisible(false);
                 scrollPane.setVisible(false);
+                
+                placeHolder.setVisible(true);
+                
                 DefaultTableModel model = (DefaultTableModel) resultsTable.getModel();
                 model.setRowCount(0);
                 
                 weatherPanel.getMonthComboBox().setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
                 weatherPanel.getTempSpinner().setValue(58);
-                weatherPanel.slider.setValue(0);
-                sitePanel.slider.setValue(0);
+                weatherPanel.slider.setValue(50);
+                sitePanel.slider.setValue(50);
                 costPanel.slider.setValue(0);
                 topN_ComboBox.setSelectedIndex(0);
-                
 
                 runBtn.setEnabled(true);
                 resetBtn.setEnabled(false);
@@ -188,7 +207,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_frameTitle.gridx = 0;
         gbc_frameTitle.gridwidth = 4;
         gbc_frameTitle.gridy = 0;
-        gbc_frameTitle.weighty = 0.25;
+        gbc_frameTitle.weighty = 0.40;
         c.add(frameTitle, gbc_frameTitle);
         
         // Row 2, Col 1-4: Weather Panel
@@ -262,20 +281,31 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_resetBtn.anchor = GridBagConstraints.CENTER;
         c.add(resetBtn, gbc_resetBtn);
         
-        // Row 7, Col 1-4: Display Place Holder
+        // Row 7-8, Col 1-4: Display Place Holder
         
-        gbc_recDisplay.gridx = 0;
-        gbc_recDisplay.gridy = gbc_resetBtn.gridy + 1;
-        gbc_recDisplay.gridwidth = 4;
-        gbc_recDisplay.weighty = 1.3;
-        c.add(recDisplay, gbc_recDisplay);
+        gbc_placeHolder.gridx = 0;
+        gbc_placeHolder.gridy = gbc_resetBtn.gridy + 1;
+        gbc_placeHolder.gridwidth = 4;
+        gbc_placeHolder.gridheight = 2;
+        gbc_placeHolder.weighty = 1.5;
+        c.add(placeHolder, gbc_placeHolder);
         
-        // Row 7, Col 1-4: Results Table
+        // Row 7, Col 1-4: Results Message
+
+        gbc_rec.gridx = 0;
+        gbc_rec.gridy = gbc_placeHolder.gridy;
+        gbc_rec.gridwidth = 4;
+        gbc_rec.weighty = 0.2;
+        gbc_rec.anchor = GridBagConstraints.SOUTH;
+        c.add(rec, gbc_rec);
+        
+        // Row 8, Col 1-4: Results Table
         
         gbc_resultsTable.gridx = 0;
-        gbc_resultsTable.gridy = gbc_recDisplay.gridy;
+        gbc_resultsTable.gridy = 7;
         gbc_resultsTable.gridwidth = 4;
-        gbc_resultsTable.weighty = 1.3;
+        gbc_resultsTable.weighty = 0.8;
+//        gbc_resultsTable.anchor = GridBagConstraints.NORTH;
         c.add(scrollPane, gbc_resultsTable);
 
     }

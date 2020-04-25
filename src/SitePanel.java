@@ -35,7 +35,7 @@ public class SitePanel extends TripComponentPanel {
         String left = "What is culture?";
         String mid = "I guess I should care about culture";
         String right = "Culture nerd and proud!";
-        slider = new StandardSlider(left, mid, right);
+        slider = new StandardSlider(0, 100, left, mid, right);
         
         GridBagConstraints gbc_slider = new GridBagConstraints();
         gbc_slider.fill = GridBagConstraints.HORIZONTAL;

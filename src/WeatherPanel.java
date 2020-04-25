@@ -128,7 +128,7 @@ public class WeatherPanel extends TripComponentPanel
         String left = "Not important";
         String mid = "Kinda important";
         String right = "Very important";
-        slider = new StandardSlider(left, mid, right);
+        slider = new StandardSlider(0, 100, left, mid, right);
         
         GridBagConstraints gbc_slider = new GridBagConstraints();
         gbc_slider.fill = GridBagConstraints.HORIZONTAL;
