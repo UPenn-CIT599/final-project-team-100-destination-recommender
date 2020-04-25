@@ -120,8 +120,10 @@ public class MainFrame extends JFrame implements ActionListener {
                     data[i][0] = i + 1;                         
                     data[i][1] = topCountries.get(i).getName();
                     new Double((double) (data[i][2] = topCountries.get(i).getNumSites()));
+
                     data[i][3] = CountryAnalysis.df1.format(topCountries.get(i).getCostOfLiving());
                     data[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
+
                 }
                 
                 if (model.getRowCount() == 0) {
@@ -277,7 +279,7 @@ public class MainFrame extends JFrame implements ActionListener {
         c.add(scrollPane, gbc_resultsTable);
 
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
 
