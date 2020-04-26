@@ -204,4 +204,16 @@ class DestinationRecommenderTest {
 
 	}
 
+	@Test
+	void sortCountriesByTotalScore6() {
+		String month = "November";
+		ArrayList<String> expectedAnswer = new ArrayList<String>();
+		expectedAnswer.add("Italy"); 
+		ArrayList<Country> actualAnswerCountry = countryAnalysis.applyWeights(fileReader.readCSV(month), 5, 5, 5, 42, month);
+		System.out.println(actualAnswerCountry);
+		ArrayList<String> actualAnswer = countryAnalysis.sortCountriesByTotalScore(actualAnswerCountry, 1);
+		assertEquals(expectedAnswer, actualAnswer);
+
+	}
+
 }
