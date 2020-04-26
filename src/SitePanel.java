@@ -19,7 +19,7 @@ public class SitePanel extends TripComponentPanel {
      */
     public SitePanel() {
         
-        super("Sites Preference", 133);
+        super("Sites Preference", 110);
         
         //// First Row /////////////////////////////////
 

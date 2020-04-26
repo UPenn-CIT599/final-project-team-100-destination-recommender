@@ -52,7 +52,7 @@ public class WeatherPanel extends TripComponentPanel
 
     public WeatherPanel() {
         
-        super("Weather Preference", 150);
+        super("Weather Preference", 133);
         
         // GRID LAYOUT: 4 rows x 2 columns
         

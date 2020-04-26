@@ -13,14 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-
-import com.sun.org.glassfish.external.statistics.annotations.Reset;
 
 
 public class MainFrame extends JFrame implements ActionListener {
@@ -32,37 +30,52 @@ public class MainFrame extends JFrame implements ActionListener {
     public MainFrame(String title) {
         super(title);
         
-        // Set layout manager
+        // Set layout manager /////////////////////////////////////////
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWeights = new double[]{1.0};
         getContentPane().setLayout(gridBagLayout);
 
-        // Create Swing components
+        // Create Swing components ////////////////////////////////////
+        
+        // Title
+        
         JLabel frameTitle = new JLabel("Euro Trip Destination Recommender");
         frameTitle.setFont(new Font("Serif", Font.BOLD, 36));
         GridBagConstraints gbc_frameTitle = new GridBagConstraints();
         
+        // Weather Panel
+        
         WeatherPanel weatherPanel = new WeatherPanel();
         GridBagConstraints gbc_weatherPanel = new GridBagConstraints();
+        
+        // Site Panel
         
         SitePanel sitePanel = new SitePanel();
         GridBagConstraints gbc_sitesPanel = new GridBagConstraints();
 
+        // Cost Panel
+        
         CostPanel costPanel = new CostPanel();
         GridBagConstraints gbc_costPanel = new GridBagConstraints();
         
+        // topN Question Label Start
+        
         JLabel topN_QuestionStart = new JLabel("Show top");
-//        topN_QuestionStart.setForeground(Color.black);
         GridBagConstraints gbc_topN_QuestionStart = new GridBagConstraints();
+        
+        // topN Question Label End
         
         JLabel topN_QuestionEnd = new JLabel("results");
         GridBagConstraints gbc_topN_QuestionEnd = new GridBagConstraints();
-//        topN_QuestionEnd.setForeground(Color.black);
-
+        
+        // topN Question ComboBox
+        
         Integer[] topN_choices = { 1, 2, 3, 4, 5 };
         JComboBox<Integer> topN_ComboBox = new JComboBox<>(topN_choices);
         topN_ComboBox.addActionListener(this);
         GridBagConstraints gbc_topN_ComboBox = new GridBagConstraints();
+        
+        // Place Holder TextArea
         
         JTextArea placeHolder = new JTextArea("Results will show here...");
         placeHolder.setFont(new Font("Dialog", Font.ITALIC, 24));
@@ -71,38 +84,74 @@ public class MainFrame extends JFrame implements ActionListener {
         placeHolder.setEditable(false);
         GridBagConstraints gbc_placeHolder = new GridBagConstraints();
         
+        // Top Results Message
+        
+        JLabel topMessage = new JLabel("We recommend the following destinations:");
+        GridBagConstraints gbc_topMessage = new GridBagConstraints();
+        topMessage.setVisible(false);
+        
+        // Bottom Results Message
+        
+        JLabel bottomMessage = new JLabel("Don't go here!");
+        GridBagConstraints gbc_bottomMessage = new GridBagConstraints();
+        bottomMessage.setVisible(false);
+        
+        // Top Results Table
+        
         String[] columnNames = { "Rank", "Country", "Number of Sites", "Cost of Living", "Average Temperature" };
-        Object[][] data = new Object[5][5];
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        JTable resultsTable = new JTable(model);
-        resultsTable.setModel(model);
+        Object[][] topData = new Object[5][5];
+        DefaultTableModel topModel = new DefaultTableModel(topData, columnNames);
+        JTable topResultsTable = new JTable(topModel);
+        topResultsTable.setModel(topModel);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-        resultsTable.getColumnModel().getColumn(0).setPreferredWidth(15);
+        topResultsTable.getColumnModel().getColumn(0).setPreferredWidth(15);
         for (int i = 0; i < 5; i++) {
-            resultsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            topResultsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         
-        JLabel rec = new JLabel("We recommend the following destinations:");
-        GridBagConstraints gbc_rec = new GridBagConstraints();
-        rec.setVisible(false);
+        topResultsTable.setPreferredScrollableViewportSize(new Dimension(585, 80));
+        topResultsTable.setFillsViewportHeight(true);
+        JScrollPane topScrollPane = new JScrollPane(topResultsTable);
+        topScrollPane.setVisible(false);
+        GridBagConstraints gbc_topResultsTable = new GridBagConstraints();
         
-        resultsTable.setPreferredScrollableViewportSize(new Dimension(585, 80));
-        resultsTable.setFillsViewportHeight(true);
-        JScrollPane scrollPane = new JScrollPane(resultsTable);
-        scrollPane.setVisible(false);
-        GridBagConstraints gbc_resultsTable = new GridBagConstraints();
+        // Bottom Results Table
+        
+        Object[][] bottomData = new Object[5][5];
+        DefaultTableModel bottomModel = new DefaultTableModel(bottomData, columnNames);
+        JTable bottomResultsTable = new JTable(bottomModel);
+        bottomResultsTable.setModel(bottomModel);
+        
+        bottomResultsTable.getColumnModel().getColumn(0).setPreferredWidth(15);
+        for (int i = 0; i < 5; i++) {
+            bottomResultsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        
+        bottomResultsTable.setPreferredScrollableViewportSize(new Dimension(585, 80));
+        bottomResultsTable.setFillsViewportHeight(true);
+        JScrollPane bottomScrollPane = new JScrollPane(bottomResultsTable);
+        bottomScrollPane.setVisible(false);
+        GridBagConstraints gbc_bottomResultsTable = new GridBagConstraints();
+        
+        // Run Button
 
         JButton runBtn = new JButton("Run");
         runBtn.setPreferredSize(new Dimension(70, 25));
         GridBagConstraints gbc_runBtn = new GridBagConstraints();
+        
+        // Reset Button
         
         JButton resetBtn = new JButton("Reset");
         resetBtn.setPreferredSize(new Dimension(70, 25));
 
         GridBagConstraints gbc_resetBtn = new GridBagConstraints();
         resetBtn.setEnabled(false);
+        
+        // Add ActionListeners /////////////////////////////////
+        
+        // Run Button AL
         
         runBtn.addActionListener(new ActionListener() {
             
@@ -124,26 +173,46 @@ public class MainFrame extends JFrame implements ActionListener {
                 topCountries.sort(null);
                 
                 for (int i = 0; i < topN; i++) {
-                    data[i][0] = i + 1;                         
-                    data[i][1] = topCountries.get(i).getName();
-                    new Double((double) (data[i][2] = topCountries.get(i).getNumSites()));
-                    data[i][3] = CountryAnalysis.df1.format(topCountries.get(i).getCostOfLiving());
-                    data[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
+                    topData[i][0] = i + 1;                         
+                    topData[i][1] = topCountries.get(i).getName();
+                    new Double((double) (topData[i][2] = topCountries.get(i).getNumSites()));
+                    topData[i][3] = CountryAnalysis.df1.format(topCountries.get(i).getCostOfLiving());
+                    topData[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
 
                 }
                 
-                if (model.getRowCount() == 0) {
-                    model.setRowCount(5);
+                if (topModel.getRowCount() == 0) {
+                    topModel.setRowCount(5);
                 }
                 
                 for (int i = 0; i < topN; i++) {
                     for (int j = 0; j < 5; j++) {
-                        resultsTable.setValueAt(data[i][j], i, j);
+                        topResultsTable.setValueAt(topData[i][j], i, j);
                     }
                 }
                 
-                rec.setVisible(true);
-                scrollPane.setVisible(true);
+                for (int i = topCountries.size() - 1; i > topCountries.size() - 1 - topN; i--) {
+                    bottomData[topCountries.size() - 1 - i][0] = i + 1;                         
+                    bottomData[topCountries.size() - 1 - i][1] = topCountries.get(i).getName();
+                    new Double((double) (bottomData[topCountries.size() - 1 - i][2] = topCountries.get(i).getNumSites()));
+                    bottomData[topCountries.size() - 1 - i][3] = CountryAnalysis.df1.format(topCountries.get(i).getCostOfLiving());
+                    bottomData[topCountries.size() - 1 - i][4] = topCountries.get(i).getMonthTemperature() + " ºF";  
+                }
+                
+                if (bottomModel.getRowCount() == 0) {
+                    bottomModel.setRowCount(5);
+                }
+                
+                for (int i = topCountries.size() - 1; i > topCountries.size() - 1 - topN; i--) {
+                    for (int j = 0; j < 5; j++) {
+                        bottomResultsTable.setValueAt(bottomData[topCountries.size() - 1 - i][j], topCountries.size() - 1 - i, j);
+                    }
+                }
+                
+                topMessage.setVisible(true);
+                bottomMessage.setVisible(true);
+                topScrollPane.setVisible(true);
+                bottomScrollPane.setVisible(true);
                 placeHolder.setVisible(false);
                 runBtn.setEnabled(false);
                 resetBtn.setEnabled(true);
@@ -172,16 +241,20 @@ public class MainFrame extends JFrame implements ActionListener {
             }
         });
         
+        // Reset Button AL
+        
         resetBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
 
-                rec.setVisible(false);
-                scrollPane.setVisible(false);
+                topMessage.setVisible(false);
+                bottomMessage.setVisible(false);
+                topScrollPane.setVisible(false);
+                bottomScrollPane.setVisible(false);
                 
                 placeHolder.setVisible(true);
                 
-                DefaultTableModel model = (DefaultTableModel) resultsTable.getModel();
+                DefaultTableModel model = (DefaultTableModel) topResultsTable.getModel();
                 model.setRowCount(0);
                 
                 weatherPanel.getMonthComboBox().setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
@@ -198,7 +271,7 @@ public class MainFrame extends JFrame implements ActionListener {
             
         });
 
-        // Add Swing components to content pane
+        // Add Swing components to content pane //////////////////////////////
         Container c = getContentPane();
         c.setBackground(mainFrameColor);
         
@@ -287,26 +360,45 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_placeHolder.gridy = gbc_resetBtn.gridy + 1;
         gbc_placeHolder.gridwidth = 4;
         gbc_placeHolder.gridheight = 2;
-        gbc_placeHolder.weighty = 1.5;
+        gbc_placeHolder.weighty = 4;
         c.add(placeHolder, gbc_placeHolder);
         
-        // Row 7, Col 1-4: Results Message
+        // Row 7, Col 1-4: Top Results Message
 
-        gbc_rec.gridx = 0;
-        gbc_rec.gridy = gbc_placeHolder.gridy;
-        gbc_rec.gridwidth = 4;
-        gbc_rec.weighty = 0.2;
-        gbc_rec.anchor = GridBagConstraints.SOUTH;
-        c.add(rec, gbc_rec);
+        gbc_topMessage.gridx = 0;
+        gbc_topMessage.gridy = gbc_placeHolder.gridy;
+        gbc_topMessage.gridwidth = 4;
+        gbc_topMessage.weighty = 0.02;
+        gbc_topMessage.anchor = GridBagConstraints.SOUTH;
+        c.add(topMessage, gbc_topMessage);
         
-        // Row 8, Col 1-4: Results Table
+        // Row 8, Col 1-4: Top Results Table
         
-        gbc_resultsTable.gridx = 0;
-        gbc_resultsTable.gridy = 7;
-        gbc_resultsTable.gridwidth = 4;
-        gbc_resultsTable.weighty = 0.8;
-//        gbc_resultsTable.anchor = GridBagConstraints.NORTH;
-        c.add(scrollPane, gbc_resultsTable);
+        gbc_topResultsTable.gridx = 0;
+        gbc_topResultsTable.gridy = gbc_topMessage.gridy + 1;
+        gbc_topResultsTable.gridwidth = 4;
+        gbc_topResultsTable.weighty = 0.8;
+//        gbc_topResultsTable.anchor = GridBagConstraints.NORTH;
+        c.add(topScrollPane, gbc_topResultsTable);
+        
+        // Row 9, Col 1-4: Bottom Results Message
+        
+        gbc_bottomMessage.gridx = 0;
+        gbc_bottomMessage.gridy = gbc_topResultsTable.gridy + 1;
+        gbc_bottomMessage.gridwidth = 4;
+        gbc_bottomMessage.weighty = 0.02;
+        gbc_bottomMessage.anchor = GridBagConstraints.SOUTH;
+        c.add(bottomMessage, gbc_bottomMessage);
+        
+        // Row 10. Col 1-4: Bottom Results Table
+        
+        gbc_bottomResultsTable.gridx = 0;
+        gbc_bottomResultsTable.gridy = gbc_bottomMessage.gridy + 1;
+        gbc_bottomResultsTable.gridwidth = 4;
+        gbc_bottomResultsTable.weighty = 0.8;
+//        gbc_bottomResultsTable.anchor = GridBagConstraints.NORTH;
+        c.add(bottomScrollPane, gbc_bottomResultsTable);
+        
 
     }
     
