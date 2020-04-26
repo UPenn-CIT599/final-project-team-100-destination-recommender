@@ -84,7 +84,7 @@ class DestinationRecommenderTest {
 		actualAnswer = fileReader.readCSV("January");
 		actualAnswer = countryAnalysis.applyWeights(actualAnswer, 5, 6, 7, 62, "January");
 		assertEquals(df2.format(expectedAnswer.get(0).getTotalScore()), df2.format(actualAnswer.get(3).getTotalScore()),
-				"Wrong totla score");
+				"Wrong total score");
 	}
 
 	@Test
@@ -98,7 +98,7 @@ class DestinationRecommenderTest {
 		actualAnswer = countryAnalysis.applyWeights(actualAnswer, 3, 8, 4, 87, month);
 		System.out.println("dkjfdls " + actualAnswer.get(14).getTotalScore());
 		assertEquals(df2.format(expectedAnswer.get(0).getTotalScore()),
-				df2.format(actualAnswer.get(14).getTotalScore()), "Wrong totla score");
+				df2.format(actualAnswer.get(14).getTotalScore()), "Wrong total score");
 	}
 
 	@Test
@@ -112,7 +112,21 @@ class DestinationRecommenderTest {
 		
 		actualAnswer = countryAnalysis.applyWeights(actualAnswer, 3, 9, 5, 53, month);
 		assertEquals(df2.format(expectedAnswer.get(0).getTotalScore()),
-				df2.format(actualAnswer.get(26).getTotalScore()), "Wrong totla score");
+				df2.format(actualAnswer.get(26).getTotalScore()), "Wrong total score");
+	}
+	
+	@Test
+	void applyWeightsTest4() {
+//		fail("Not yet implemented");	
+		ArrayList<Country> expectedAnswer = new ArrayList<Country>();
+		String month = "March";
+		ArrayList<Country> actualAnswer = fileReader.readCSV(month);
+		Country expectedCountry = new Country("Norway", 8, 101.43, 30.2, 5.49); // Need to check totalScore
+		expectedAnswer.add(expectedCountry);
+		
+		actualAnswer = countryAnalysis.applyWeights(actualAnswer, 2, 3, 6, 62, month);
+		assertEquals(df2.format(expectedAnswer.get(0).getTotalScore()),
+				df2.format(actualAnswer.get(26).getTotalScore()), "Wrong total score");
 	}
 
 	@Test
