@@ -56,6 +56,23 @@ class DestinationRecommenderTest {
 		assertEquals(expectedAnswer.get(0).getMonthTemperature(), actualAnswer.get(27).getMonthTemperature(),
 				"Wrong temperature");
 	}
+	
+	@Test
+	void readCSVTest4() {
+//		fail("Not yet implemented");	
+		ArrayList<Country> expectedAnswer = new ArrayList<Country>();
+		ArrayList<Country> actualAnswer = fileReader.readCSV("January");
+		Country expectedCountry = new Country("Italy", 56, 67.26, 42.2, 0);
+		expectedAnswer.add(expectedCountry);
+		assertEquals(expectedAnswer.get(0).getName(), actualAnswer.get(22).getName(), "Wrong country name");
+		assertEquals(expectedAnswer.get(0).getNumSites(), actualAnswer.get(22).getNumSites(), "Wrong number of sites");
+		assertEquals(expectedAnswer.get(0).getCostOfLiving(), actualAnswer.get(22).getCostOfLiving(),
+				"Wrong cost of living");
+		assertEquals(expectedAnswer.get(0).getMonthTemperature(), actualAnswer.get(22).getMonthTemperature(),
+				"Wrong temperature");
+	}
+	
+	
 
 	@Test
 	void applyWeightsTest1() {
