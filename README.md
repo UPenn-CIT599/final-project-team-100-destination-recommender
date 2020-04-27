@@ -1,4 +1,5 @@
 Euro Trip Destination Recommender
+
 Authors: Sean Bivins, Ryan Ng, Madhav Vohra
 
 Steps to run program:
