@@ -18,7 +18,7 @@ the various panes in any order that you wish, but we will explain from top to bo
 ![Alt text](/screenshots/ETDR-Start.png?raw=true)
 
 5. In the "Weather Preference" pane, select the month you would like to travel, your ideal
-temperature, and move the slider to match your preference for temperature
+temperature, and move the slider to match your preference for temperature.
 ![Alt text](/screenshots/ETDR-WeatherCircled.png?raw=true)
 
 6. In the "Sites Preference" pane, move the slider to match your preference for historical sites.
@@ -28,10 +28,10 @@ temperature, and move the slider to match your preference for temperature
 ![Alt text](/screenshots/ETDR-CostCircled.png?raw=true)
 
 8. Below "Cost Preference", you have the option to select how many top (and bottom) results will
-display
+display.
 ![Alt text](/screenshots/ETDR-topN_Circled.png?raw=true)
 
-9. Once you are satisfied with your inputs, you can press the "Run" button to display the results
+9. Once you are satisfied with your inputs, you can press the "Run" button to display the results.
 ![Alt text](/screenshots/ETDR-RunCircled.png?raw=true)
 
 10. The results display at the bottom in two tables: the top results and the bottom results.
