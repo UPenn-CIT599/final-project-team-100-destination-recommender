@@ -11,10 +11,10 @@ public class CountryAnalysis {
 	 * @param weatherWeight
 	 * @param userInputTemp
 	 * @param month
-	 * @return an arrayList of countryScores
+	 * @return a sorted arrayList of countryScores
 	 */
 
-	public ArrayList<Country> applyWeights(ArrayList<Country> countries, double siteWeight, double costWeight,
+	public static ArrayList<Country> applyWeights(ArrayList<Country> countries, double siteWeight, double costWeight,
 			double weatherWeight, double userInputTemp, String month) {
 		ArrayList<Country> countryScores = new ArrayList<Country>();
 		double maxNumSites = -1;
@@ -43,6 +43,7 @@ public class CountryAnalysis {
 																		// score! Hence the -siteScore
 			country.setTotalScore(totalScore);
 			countryScores.add(country);
+			countryScores.sort(null);
 		}
 		return countryScores;
 	}

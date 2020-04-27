@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
-public class MainFrame extends JFrame implements ActionListener {
+public class MainFrame extends JFrame {
    
     private int topN;
     private int count;
@@ -32,7 +32,6 @@ public class MainFrame extends JFrame implements ActionListener {
         
         // Set layout manager /////////////////////////////////////////
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWeights = new double[]{1.0};
         getContentPane().setLayout(gridBagLayout);
 
         // Create Swing components ////////////////////////////////////
@@ -72,7 +71,6 @@ public class MainFrame extends JFrame implements ActionListener {
         
         Integer[] topN_choices = { 1, 2, 3, 4, 5 };
         JComboBox<Integer> topN_ComboBox = new JComboBox<>(topN_choices);
-        topN_ComboBox.addActionListener(this);
         GridBagConstraints gbc_topN_ComboBox = new GridBagConstraints();
         
         // Place Holder TextArea
@@ -80,57 +78,31 @@ public class MainFrame extends JFrame implements ActionListener {
         JTextArea placeHolder = new JTextArea("Results will show here...");
         placeHolder.setFont(new Font("Dialog", Font.ITALIC, 24));
         placeHolder.setBackground(mainFrameColor);
-        placeHolder.setSize(300, 200);
         placeHolder.setEditable(false);
         GridBagConstraints gbc_placeHolder = new GridBagConstraints();
         
         // Top Results Message
         
         JLabel topMessage = new JLabel("We recommend the following destinations:");
-        GridBagConstraints gbc_topMessage = new GridBagConstraints();
         topMessage.setVisible(false);
+        GridBagConstraints gbc_topMessage = new GridBagConstraints();
         
         // Bottom Results Message
         
         JLabel bottomMessage = new JLabel("Don't go here!");
-        GridBagConstraints gbc_bottomMessage = new GridBagConstraints();
         bottomMessage.setVisible(false);
+        GridBagConstraints gbc_bottomMessage = new GridBagConstraints();
         
         // Top Results Table
         
-        String[] columnNames = { "Rank", "Country", "Number of Sites", "Cost of Living", "Average Temperature" };
-        Object[][] topData = new Object[5][5];
-        DefaultTableModel topModel = new DefaultTableModel(topData, columnNames);
-        JTable topResultsTable = new JTable(topModel);
-        topResultsTable.setModel(topModel);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-        topResultsTable.getColumnModel().getColumn(0).setPreferredWidth(15);
-        for (int i = 0; i < 5; i++) {
-            topResultsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-        
-        topResultsTable.setPreferredScrollableViewportSize(new Dimension(585, 80));
-        topResultsTable.setFillsViewportHeight(true);
+        ResultsTable topResultsTable = new ResultsTable();
         JScrollPane topScrollPane = new JScrollPane(topResultsTable);
         topScrollPane.setVisible(false);
         GridBagConstraints gbc_topResultsTable = new GridBagConstraints();
         
         // Bottom Results Table
         
-        Object[][] bottomData = new Object[5][5];
-        DefaultTableModel bottomModel = new DefaultTableModel(bottomData, columnNames);
-        JTable bottomResultsTable = new JTable(bottomModel);
-        bottomResultsTable.setModel(bottomModel);
-        
-        bottomResultsTable.getColumnModel().getColumn(0).setPreferredWidth(15);
-        for (int i = 0; i < 5; i++) {
-            bottomResultsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-        
-        bottomResultsTable.setPreferredScrollableViewportSize(new Dimension(585, 80));
-        bottomResultsTable.setFillsViewportHeight(true);
+        ResultsTable bottomResultsTable = new ResultsTable();
         JScrollPane bottomScrollPane = new JScrollPane(bottomResultsTable);
         bottomScrollPane.setVisible(false);
         GridBagConstraints gbc_bottomResultsTable = new GridBagConstraints();
@@ -148,134 +120,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
         GridBagConstraints gbc_resetBtn = new GridBagConstraints();
         resetBtn.setEnabled(false);
-        
-        // Add ActionListeners /////////////////////////////////
-        
-        // Run Button AL
-        
-        runBtn.addActionListener(new ActionListener() {
-            
-            /**
-             * Here is where you pull the user input from
-             */
-            public void actionPerformed(ActionEvent e) {
-
-                String tripMonth = weatherPanel.getMonthSelected();
-                double idealTemp = weatherPanel.getIdealTemp();
-                double weatherPreference = weatherPanel.getUserPreference();
-                double sitePreference = sitePanel.getUserPreference();
-                double costPreference = -1 * costPanel.getUserPreference();
-                if (topN == 0) topN = 1; //in case user does not change topN, defaults to 1
-                
-                CountryAnalysis ca = new CountryAnalysis();
-                ArrayList<Country> topCountries = ca.applyWeights(FileReader.readCSV(tripMonth),
-                        sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
-                topCountries.sort(null);
-                DecimalFormat df1 = new DecimalFormat("#.00");
-                
-                for (int i = 0; i < topN; i++) {
-                    topData[i][0] = i + 1;                         
-                    topData[i][1] = topCountries.get(i).getName();
-                    new Double((double) (topData[i][2] = topCountries.get(i).getNumSites()));
-                    topData[i][3] = df1.format(topCountries.get(i).getCostOfLiving());
-                    topData[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
-
-                }
-                
-                if (topModel.getRowCount() == 0) {
-                    topModel.setRowCount(5);
-                }
-                
-                for (int i = 0; i < topN; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        topResultsTable.setValueAt(topData[i][j], i, j);
-                    }
-                }
-                
-                for (int i = topCountries.size() - 1; i > topCountries.size() - 1 - topN; i--) {
-                    bottomData[topCountries.size() - 1 - i][0] = i + 1;                         
-                    bottomData[topCountries.size() - 1 - i][1] = topCountries.get(i).getName();
-                    new Double((double) (bottomData[topCountries.size() - 1 - i][2] = topCountries.get(i).getNumSites()));
-                    bottomData[topCountries.size() - 1 - i][3] = df1.format(topCountries.get(i).getCostOfLiving());
-                    bottomData[topCountries.size() - 1 - i][4] = topCountries.get(i).getMonthTemperature() + " ºF";  
-                }
-                
-                if (bottomModel.getRowCount() == 0) {
-                    bottomModel.setRowCount(5);
-                }
-                
-                for (int i = topCountries.size() - 1; i > topCountries.size() - 1 - topN; i--) {
-                    for (int j = 0; j < 5; j++) {
-                        bottomResultsTable.setValueAt(bottomData[topCountries.size() - 1 - i][j], topCountries.size() - 1 - i, j);
-                    }
-                }
-                
-                topMessage.setVisible(true);
-                bottomMessage.setVisible(true);
-                topScrollPane.setVisible(true);
-                bottomScrollPane.setVisible(true);
-                placeHolder.setVisible(false);
-                runBtn.setEnabled(false);
-                resetBtn.setEnabled(true);
-                
-                System.out.println("Trip month: " + tripMonth);
-                System.out.println("Ideal temp: " + idealTemp);
-                System.out.println("Weather preference: " + weatherPreference);
-                System.out.println("Site preference: " + sitePreference);
-                System.out.println("Cost preference: " + costPreference);
-                System.out.println("topN = " + topN);
-                System.out.println(placeHolder.getFont());
-
-                for (int i = 0; i < topN; i++) {
-                    System.out.println((i + 1) + ". " + topCountries.get(i).getTotalScore());
-                }
-                
-                if (count == 3) {
-                    placeHolder.setText("Really enjoying this trip recommender, huh?");
-                } else if (count == 4) {
-                    placeHolder.setText("You should consider giving team 100 a 100 :)");
-                } else {
-                    placeHolder.setText("                                         ");
-                }
-                
-                count++;
-            }
-        });
-        
-        // Reset Button AL
-        
-        resetBtn.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent arg0) {
-
-                topMessage.setVisible(false);
-                bottomMessage.setVisible(false);
-                topScrollPane.setVisible(false);
-                bottomScrollPane.setVisible(false);
-                
-                placeHolder.setVisible(true);
-                
-                DefaultTableModel topModel = (DefaultTableModel) topResultsTable.getModel();
-                topModel.setRowCount(0);
-                
-                DefaultTableModel bottomModel = (DefaultTableModel) bottomResultsTable.getModel();
-                bottomModel.setRowCount(0);
-                
-                weatherPanel.getMonthComboBox().setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
-                weatherPanel.getTempSpinner().setValue(58);
-                weatherPanel.slider.setValue(50);
-                sitePanel.slider.setValue(50);
-                costPanel.slider.setValue(0);
-                topN_ComboBox.setSelectedIndex(0);
-
-                runBtn.setEnabled(true);
-                resetBtn.setEnabled(false);
-                
-            }
-            
-        });
 
         // Add Swing components to content pane //////////////////////////////
+        
         Container c = getContentPane();
         c.setBackground(mainFrameColor);
         
@@ -404,15 +251,97 @@ public class MainFrame extends JFrame implements ActionListener {
         c.add(bottomScrollPane, gbc_bottomResultsTable);
         
         pack();
+        
+        // Add ActionListeners /////////////////////////////////
+        
+        // topN ComboBox AL
+        
+        topN_ComboBox.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e) {
+
+                JComboBox<Integer> cb = (JComboBox<Integer>) e.getSource();
+                topN = (int) cb.getSelectedItem();
+                
+            }
+        });
+        
+        // Run Button AL
+        
+        runBtn.addActionListener(new ActionListener() {
+            
+            /**
+             * Here is where you pull the user input from
+             */
+            public void actionPerformed(ActionEvent e) {
+
+                // Run Button "instance variables"
+                String tripMonth = weatherPanel.getMonthSelected();
+                double idealTemp = weatherPanel.getIdealTemp();
+                double weatherPreference = weatherPanel.getUserPreference();
+                double sitePreference = sitePanel.getUserPreference();
+                double costPreference = -1 * costPanel.getUserPreference();
+                ArrayList<Country> sortedCountries = CountryAnalysis.applyWeights(FileReader.readCSV(tripMonth),
+                        sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
+                if (topN == 0) topN = 1; //in case user does not change topN, defaults to 1
+
+                // Fill tables with data
+                topResultsTable.fillTable(topN, sortedCountries, true);
+                bottomResultsTable.fillTable(topN, sortedCountries, false);
+                
+                // Hide place holder, show results                 
+                placeHolder.setVisible(false);
+                topMessage.setVisible(true);
+                bottomMessage.setVisible(true);
+                topScrollPane.setVisible(true);
+                bottomScrollPane.setVisible(true);
+                runBtn.setEnabled(false);
+                resetBtn.setEnabled(true);
+                
+                // Fun little easter egg :)
+                if (count == 3) {
+                    placeHolder.setText("Really enjoying this trip recommender, huh?");
+                } else if (count == 4) {
+                    placeHolder.setText("You should consider giving team 100 a 100 :)");
+                } else {
+                    placeHolder.setText("                                         ");
+                }
+                
+                count++;
+            }
+        });
+        
+        // Reset Button AL
+        
+        resetBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+
+                // Set all fields to default               
+                weatherPanel.getMonthComboBox().setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
+                weatherPanel.getTempSpinner().setValue(58);
+                weatherPanel.slider.setValue(50);
+                sitePanel.slider.setValue(50);
+                costPanel.slider.setValue(0);
+                topN_ComboBox.setSelectedIndex(0);
+                
+                topResultsTable.clearData();
+                bottomResultsTable.clearData();
+                
+                // Hide results, show placeholder
+                topMessage.setVisible(false);
+                bottomMessage.setVisible(false);
+                topScrollPane.setVisible(false);
+                bottomScrollPane.setVisible(false);                
+                placeHolder.setVisible(true);
+                
+                runBtn.setEnabled(true);
+                resetBtn.setEnabled(false);
+                   
+            }
+            
+        });
 
     }
     
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        JComboBox cb = (JComboBox) e.getSource();
-        topN = (int) cb.getSelectedItem();
-        
-    }
-
 }
