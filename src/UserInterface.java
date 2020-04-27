@@ -4,11 +4,10 @@ import javax.swing.SwingUtilities;
 public class UserInterface {
 
     /**
-     * This is the main method from which the GUI is launched
-     * @param args
+     * Runs the GUI
      */
-    public static void main(String[] args) {
-              
+    public static void play() {
+        
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new MainFrame("Euro Trip Destination Recommender");
