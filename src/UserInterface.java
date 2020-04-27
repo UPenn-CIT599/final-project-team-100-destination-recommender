@@ -11,7 +11,7 @@ public class UserInterface {
      * This is the main method from which the GUI is launched
      * @param args
      */
-    public static void main(String[] args) {
+    public void play() {
         
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
