@@ -178,7 +178,7 @@ public class MainFrame extends JFrame implements ActionListener {
                     topData[i][1] = topCountries.get(i).getName();
                     new Double((double) (topData[i][2] = topCountries.get(i).getNumSites()));
                     topData[i][3] = df1.format(topCountries.get(i).getCostOfLiving());
-                    topData[i][4] = topCountries.get(i).getMonthTemperature() + " ÂºF";   
+                    topData[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
 
                 }
                 
@@ -197,7 +197,7 @@ public class MainFrame extends JFrame implements ActionListener {
                     bottomData[topCountries.size() - 1 - i][1] = topCountries.get(i).getName();
                     new Double((double) (bottomData[topCountries.size() - 1 - i][2] = topCountries.get(i).getNumSites()));
                     bottomData[topCountries.size() - 1 - i][3] = df1.format(topCountries.get(i).getCostOfLiving());
-                    bottomData[topCountries.size() - 1 - i][4] = topCountries.get(i).getMonthTemperature() + " ÂºF";  
+                    bottomData[topCountries.size() - 1 - i][4] = topCountries.get(i).getMonthTemperature() + " ºF";  
                 }
                 
                 if (bottomModel.getRowCount() == 0) {
@@ -364,7 +364,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_placeHolder.gridy = gbc_resetBtn.gridy + 1;
         gbc_placeHolder.gridwidth = 4;
         gbc_placeHolder.gridheight = 2;
-        gbc_placeHolder.weighty = 4;
+        gbc_placeHolder.weighty = 5;
         c.add(placeHolder, gbc_placeHolder);
         
         // Row 7, Col 1-4: Top Results Message
@@ -372,8 +372,8 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_topMessage.gridx = 0;
         gbc_topMessage.gridy = gbc_placeHolder.gridy;
         gbc_topMessage.gridwidth = 4;
-        gbc_topMessage.weighty = 0.02;
-        gbc_topMessage.anchor = GridBagConstraints.SOUTH;
+        gbc_topMessage.weighty = 0.5;
+        gbc_topMessage.anchor = GridBagConstraints.CENTER;
         c.add(topMessage, gbc_topMessage);
         
         // Row 8, Col 1-4: Top Results Table
@@ -381,8 +381,8 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_topResultsTable.gridx = 0;
         gbc_topResultsTable.gridy = gbc_topMessage.gridy + 1;
         gbc_topResultsTable.gridwidth = 4;
-        gbc_topResultsTable.weighty = 0.8;
-//        gbc_topResultsTable.anchor = GridBagConstraints.NORTH;
+        gbc_topResultsTable.weighty = 1.5;
+        gbc_topResultsTable.anchor = GridBagConstraints.NORTH;
         c.add(topScrollPane, gbc_topResultsTable);
         
         // Row 9, Col 1-4: Bottom Results Message
@@ -390,8 +390,8 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_bottomMessage.gridx = 0;
         gbc_bottomMessage.gridy = gbc_topResultsTable.gridy + 1;
         gbc_bottomMessage.gridwidth = 4;
-        gbc_bottomMessage.weighty = 0.02;
-        gbc_bottomMessage.anchor = GridBagConstraints.SOUTH;
+        gbc_bottomMessage.weighty = 0.5;
+        gbc_bottomMessage.anchor = GridBagConstraints.CENTER;
         c.add(bottomMessage, gbc_bottomMessage);
         
         // Row 10. Col 1-4: Bottom Results Table
@@ -399,10 +399,11 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc_bottomResultsTable.gridx = 0;
         gbc_bottomResultsTable.gridy = gbc_bottomMessage.gridy + 1;
         gbc_bottomResultsTable.gridwidth = 4;
-        gbc_bottomResultsTable.weighty = 0.8;
-//        gbc_bottomResultsTable.anchor = GridBagConstraints.NORTH;
+        gbc_bottomResultsTable.weighty = 1.5;
+        gbc_bottomResultsTable.anchor = GridBagConstraints.NORTH;
         c.add(bottomScrollPane, gbc_bottomResultsTable);
         
+        pack();
 
     }
     

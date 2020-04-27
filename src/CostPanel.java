@@ -17,7 +17,7 @@ public class CostPanel extends TripComponentPanel {
      * Create the panel.
      */
     public CostPanel() {
-        super("Cost Preference", 110);
+        super("Cost Preference", 100);
         
         //// First Row /////////////////////////////////
 
