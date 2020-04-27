@@ -7,7 +7,7 @@ Steps to run program:
 
 2. In the "Destination Recommender" folder, access the "src" folder and "(default package)",
 from which the "DestinationRecommenderRunner.java" file should be visible. Open this file.
-![Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
+![Alt text](/screenshots/Eclipse-RunnerCircled.png?raw=true)
 
 3. Once in "DestinationRecommenderRunner.java", click the green Run button at the top of your editor.
 ![Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
