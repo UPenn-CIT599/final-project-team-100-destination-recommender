@@ -1,0 +1,17 @@
+Euro Trip Destination Recommender
+
+The Euro Trip Destination Recommender was created with the goal of helping the trip planner decide where to go.
+The user is prompted with questions in 3 categories: weather, cultural sites, and cost. Based on the user's
+preference among these 3 categories, the ETDR will calculate scores for every country in Europe and recommend
+the top (and bottom) choices. On the back end, the calculator is pulling data from Weatherbase, UNESCO,
+and Numbeo and applying weights based on the user's preference in order to generate rankings.
+
+Work Breakdown:
+
+Madhav - Worked with Ryan on development of the data pulling and scoring algorithms; wrote x out of 15
+unit tests; created PowerPoint presentation and voice-over video for extra credit component
+
+Ryan - Worked with Madhav on development of the data pulling and scoring algorithms; wrote x out of 15
+unit tests;
+
+Sean - Built the Swing GUI; handled front-/back-end integration; Put together the README and summary.txt files.
