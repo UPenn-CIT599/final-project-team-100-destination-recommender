@@ -254,8 +254,11 @@ public class MainFrame extends JFrame implements ActionListener {
                 
                 placeHolder.setVisible(true);
                 
-                DefaultTableModel model = (DefaultTableModel) topResultsTable.getModel();
-                model.setRowCount(0);
+                DefaultTableModel topModel = (DefaultTableModel) topResultsTable.getModel();
+                topModel.setRowCount(0);
+                
+                DefaultTableModel bottomModel = (DefaultTableModel) bottomResultsTable.getModel();
+                bottomModel.setRowCount(0);
                 
                 weatherPanel.getMonthComboBox().setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
                 weatherPanel.getTempSpinner().setValue(58);
