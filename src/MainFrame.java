@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -13,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -171,13 +171,14 @@ public class MainFrame extends JFrame implements ActionListener {
                 ArrayList<Country> topCountries = ca.applyWeights(FileReader.readCSV(tripMonth),
                         sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
                 topCountries.sort(null);
+                DecimalFormat df1 = new DecimalFormat("#.00");
                 
                 for (int i = 0; i < topN; i++) {
                     topData[i][0] = i + 1;                         
                     topData[i][1] = topCountries.get(i).getName();
                     new Double((double) (topData[i][2] = topCountries.get(i).getNumSites()));
-                    topData[i][3] = CountryAnalysis.df1.format(topCountries.get(i).getCostOfLiving());
-                    topData[i][4] = topCountries.get(i).getMonthTemperature() + " ºF";   
+                    topData[i][3] = df1.format(topCountries.get(i).getCostOfLiving());
+                    topData[i][4] = topCountries.get(i).getMonthTemperature() + " ÂºF";   
 
                 }
                 
@@ -195,8 +196,8 @@ public class MainFrame extends JFrame implements ActionListener {
                     bottomData[topCountries.size() - 1 - i][0] = i + 1;                         
                     bottomData[topCountries.size() - 1 - i][1] = topCountries.get(i).getName();
                     new Double((double) (bottomData[topCountries.size() - 1 - i][2] = topCountries.get(i).getNumSites()));
-                    bottomData[topCountries.size() - 1 - i][3] = CountryAnalysis.df1.format(topCountries.get(i).getCostOfLiving());
-                    bottomData[topCountries.size() - 1 - i][4] = topCountries.get(i).getMonthTemperature() + " ºF";  
+                    bottomData[topCountries.size() - 1 - i][3] = df1.format(topCountries.get(i).getCostOfLiving());
+                    bottomData[topCountries.size() - 1 - i][4] = topCountries.get(i).getMonthTemperature() + " ÂºF";  
                 }
                 
                 if (bottomModel.getRowCount() == 0) {
