@@ -35,16 +35,13 @@ public class CountryAnalysis {
 			double siteScore = siteWeight * country.getNumSites() / maxNumSites; // higher siteScore is preferred
 			double costScore = costWeight * country.getCostOfLiving() / maxCostOfLiving; // lower costScore is preferred
 			double weatherScore = weatherWeight * Math.abs(country.getMonthTemperature() - userInputTemp)
-					/ maxMonthTemperature; // lower
-			// weatherScore
-			// is
-			// preferred
+					/ maxMonthTemperature; // lower weatherScore is preferred
 			double totalScore = -siteScore + costScore + weatherScore; // want to return countries with LOWEST total
-																		// score! Hence the -siteScore
+																	   // score! Hence the -siteScore
 			country.setTotalScore(totalScore);
 			countryScores.add(country);
-			countryScores.sort(null);
 		}
+        countryScores.sort(null);
 		return countryScores;
 	}
 
