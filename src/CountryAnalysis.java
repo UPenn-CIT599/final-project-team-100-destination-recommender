@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CountryAnalysis {
@@ -11,7 +10,7 @@ public class CountryAnalysis {
 	 * @param weatherWeight
 	 * @param userInputTemp
 	 * @param month
-	 * @return an arrayList of countryScores
+	 * @return a sorted arrayList of countryScores
 	 */
 
 	public static ArrayList<Country> applyWeights(ArrayList<Country> countries, double siteWeight, double costWeight,
@@ -21,13 +20,13 @@ public class CountryAnalysis {
 		double maxCostOfLiving = -1;
 		double maxMonthTemperature = -100;
 		for (Country country : countries) {
-			if (country.getNumSites() > maxNumSites) {
+			if (country.getNumSites() > maxNumSites) { // we find the maxNumSites to normalize scores as a percent
 				maxNumSites = country.getNumSites();
 			}
-			if (country.getCostOfLiving() > maxCostOfLiving) {
+			if (country.getCostOfLiving() > maxCostOfLiving) { // find maxCostOfLiving to normalize scores as a percent
 				maxCostOfLiving = country.getCostOfLiving();
 			}
-			if (country.getMonthTemperature() > maxMonthTemperature) {
+			if (country.getMonthTemperature() > maxMonthTemperature) { // find maxTemp to normalize score as a percent
 				maxMonthTemperature = country.getMonthTemperature();
 			}
 		}
@@ -35,12 +34,9 @@ public class CountryAnalysis {
 			double siteScore = siteWeight * country.getNumSites() / maxNumSites; // higher siteScore is preferred
 			double costScore = costWeight * country.getCostOfLiving() / maxCostOfLiving; // lower costScore is preferred
 			double weatherScore = weatherWeight * Math.abs(country.getMonthTemperature() - userInputTemp)
-					/ maxMonthTemperature; // lower
-			// weatherScore
-			// is
-			// preferred
+					/ maxMonthTemperature; // lower weatherScore is preferred
 			double totalScore = -siteScore + costScore + weatherScore; // want to return countries with LOWEST total
-																		// score! Hence the -siteScore
+			// score! Hence the -siteScore
 			country.setTotalScore(totalScore);
 			countryScores.add(country);
 		}
