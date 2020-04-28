@@ -11,10 +11,10 @@ public class CountryAnalysis {
 	 * @param weatherWeight
 	 * @param userInputTemp
 	 * @param month
-	 * @return a sorted arrayList of countryScores
+	 * @return an arrayList of countryScores
 	 */
 
-	public static ArrayList<Country> applyWeights(ArrayList<Country> countries, double siteWeight, double costWeight,
+	public ArrayList<Country> applyWeights(ArrayList<Country> countries, double siteWeight, double costWeight,
 			double weatherWeight, double userInputTemp, String month) {
 		ArrayList<Country> countryScores = new ArrayList<Country>();
 		double maxNumSites = -1;
@@ -35,13 +35,15 @@ public class CountryAnalysis {
 			double siteScore = siteWeight * country.getNumSites() / maxNumSites; // higher siteScore is preferred
 			double costScore = costWeight * country.getCostOfLiving() / maxCostOfLiving; // lower costScore is preferred
 			double weatherScore = weatherWeight * Math.abs(country.getMonthTemperature() - userInputTemp)
-					/ maxMonthTemperature; // lower weatherScore is preferred
+					/ maxMonthTemperature; // lower
+			// weatherScore
+			// is
+			// preferred
 			double totalScore = -siteScore + costScore + weatherScore; // want to return countries with LOWEST total
-																	   // score! Hence the -siteScore
+																		// score! Hence the -siteScore
 			country.setTotalScore(totalScore);
 			countryScores.add(country);
 		}
-        countryScores.sort(null);
 		return countryScores;
 	}
 
