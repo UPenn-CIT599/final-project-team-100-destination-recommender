@@ -7,6 +7,15 @@ public class Country implements Comparable {
 	private double monthTemperature;
 	private double totalScore;
 
+	/**
+	 * This is the constructor
+	 * 
+	 * @param name
+	 * @param numSites
+	 * @param costOfLiving
+	 * @param monthTemperature
+	 * @param totalScore
+	 */
 	public Country(String name, double numSites, double costOfLiving, double monthTemperature, double totalScore) {
 		this.name = name;
 		this.numSites = numSites;
