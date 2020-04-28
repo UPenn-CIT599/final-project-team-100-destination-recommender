@@ -43,12 +43,16 @@ public class StandardSlider extends JSlider implements ChangeListener {
      */
     public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider) e.getSource();
-        if (!source.getValueIsAdjusting()) {
+        if (!source.getValueIsAdjusting()) { // When slider is no longer changing, preference = value of slider
             preference = (double) source.getValue();
         }
         
     }
     
+    /**
+     * accesser method for preference
+     * @return
+     */
     public double getPreference() {
         return preference;
     }

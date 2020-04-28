@@ -14,7 +14,7 @@ public class CountryAnalysis {
 	 * @return an arrayList of countryScores
 	 */
 
-	public ArrayList<Country> applyWeights(ArrayList<Country> countries, double siteWeight, double costWeight,
+	public static ArrayList<Country> applyWeights(ArrayList<Country> countries, double siteWeight, double costWeight,
 			double weatherWeight, double userInputTemp, String month) {
 		ArrayList<Country> countryScores = new ArrayList<Country>();
 		double maxNumSites = -1;
@@ -56,7 +56,7 @@ public class CountryAnalysis {
 	 * @return
 	 */
 
-	public ArrayList<String> sortCountriesByTotalScore(ArrayList<Country> countries, int topN) {
+	public static ArrayList<String> sortCountriesByTotalScore(ArrayList<Country> countries, int topN) {
 		ArrayList<String> countryNames = new ArrayList<String>();
 		countries.sort(null); // using Comparator method to sort
 		for (int i = 0; i < topN; i++) {

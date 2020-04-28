@@ -7,7 +7,7 @@ public class UserInterface {
      * Runs the GUI
      */
     public static void play() {
-        
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new MainFrame("Euro Trip Destination Recommender");
@@ -16,7 +16,7 @@ public class UserInterface {
                 frame.setVisible(true);
             }
         });
-        
+
     }
 
 }

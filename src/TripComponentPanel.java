@@ -32,6 +32,11 @@ public class TripComponentPanel extends JPanel {
         return panelColor;
     }
     
+    /**
+     * Standard constructor for the weather, site, and cost panels
+     * @param title for the panel
+     * @param height of the panel
+     */
     public TripComponentPanel(String title, int height) {
         
         // Set size

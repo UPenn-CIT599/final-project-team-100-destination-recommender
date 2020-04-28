@@ -1,21 +1,12 @@
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import java.awt.Insets;
-import java.util.Hashtable;
+
 
 public class SitePanel extends TripComponentPanel {
 
     /**
-     * Create the panel.
+     * Constructor for site panel
      */
     public SitePanel() {
         

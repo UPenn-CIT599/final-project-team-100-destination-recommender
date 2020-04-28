@@ -3,16 +3,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 
 public class CostPanel extends TripComponentPanel {    
 
+    /**
+     * Constructor for cost panel
+     */
     public CostPanel() {
         super("Cost Preference", 100);
         
