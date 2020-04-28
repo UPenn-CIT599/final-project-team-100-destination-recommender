@@ -19,22 +19,19 @@ public class ResultsTable extends JTable {
     private Object[][] data = new Object[5][5];
     private DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
-    private static DecimalFormat df1 = new DecimalFormat("#.00");
-
-    public Object getDataAt(int i, int j) {
-        return data[i][j];
-    }
+    private static DecimalFormat df1 = new DecimalFormat("#.00"); // used to eliminate decimal in number of sites
 
     public ResultsTable() {
 
         setModel(model);
+        
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-        getColumnModel().getColumn(0).setPreferredWidth(15);
         for (int i = 0; i < 5; i++) {
             getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
+        } // centers all data
+        
+        getColumnModel().getColumn(0).setPreferredWidth(15);
 
         setPreferredScrollableViewportSize(new Dimension(585, 80));
         setFillsViewportHeight(true);
@@ -43,8 +40,7 @@ public class ResultsTable extends JTable {
 
     /**
      * Fills the results table with data based on the user input
-     * @param startIndex 0 for top table, sortedCountries.size() - 1 for bottom table
-     * @param topN topN for top table, sortedCountries.size() - 1 - topN for bottom table
+     * @param topN pulls from comboBox in MainFrame
      * @param sortedCountries sorted by totalScore, descending order
      * @param topTable true for top table, false for bottom table
      */
@@ -58,7 +54,7 @@ public class ResultsTable extends JTable {
         if (topTable) {
 
             // Stores data objects into the data[][] array to be displayed in table
-            // Iterates from start to topN, with positive increments
+            // Iterates from 0 to topN, with positive increments
             for (int i = 0; i < topN; i++) {
 
                 data[i][0] = i + 1;                         
@@ -71,7 +67,7 @@ public class ResultsTable extends JTable {
 
         } else {
 
-            // Iterates from end to (end - topN), with negative increments
+            // Iterates from worst to (worst - topN), with negative increments
             for (int i = indexOfWorstCountry; i > indexOfWorstCountry - topN; i--) {
 
                 data[indexOfWorstCountry - i][0] = i + 1;                         
@@ -97,9 +93,7 @@ public class ResultsTable extends JTable {
      * Clears data in table by setting row count to 0
      */
     public void clearData() {
-
         model.setRowCount(0);
-
     }
 
 }

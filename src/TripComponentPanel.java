@@ -24,6 +24,10 @@ public class TripComponentPanel extends JPanel {
         return slider.getPreference();
     }
     
+    /**
+     * Accesser method for color of panel so that slider background can match
+     * @return
+     */
     public static Color getPanelColor() {
         return panelColor;
     }
@@ -37,9 +41,7 @@ public class TripComponentPanel extends JPanel {
         setBorder(BorderFactory.createTitledBorder(title));
                 
         // Set layout
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWeights = new double[]{1.0};
-        setLayout(gridBagLayout);
+        setLayout(new GridBagLayout());
         
         // Set color
         setBackground(panelColor);

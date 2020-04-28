@@ -13,9 +13,6 @@ import javax.swing.event.ChangeListener;
 
 public class CostPanel extends TripComponentPanel {    
 
-    /**
-     * Create the panel.
-     */
     public CostPanel() {
         super("Cost Preference", 100);
         
@@ -33,7 +30,8 @@ public class CostPanel extends TripComponentPanel {
         String left = "Strict budget";
         String mid = "Got some wiggle room";
         String right = "Looking to ball out";
-        slider = new StandardSlider(-50, 50, left, mid, right);
+        slider = new StandardSlider(-50, 50, left, mid, right); // bounds set to -50 and 50 to make more expensive destinations
+                                                                // more likely to come up if user is "looking to ball out"
         
         GridBagConstraints gbc_slider = new GridBagConstraints();
         gbc_slider.fill = GridBagConstraints.HORIZONTAL;

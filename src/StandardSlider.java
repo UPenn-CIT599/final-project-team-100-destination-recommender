@@ -7,20 +7,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class StandardSlider extends JSlider implements ChangeListener {
-    
-    static final int SLIDER_MIN = -50;
-    static final int SLIDER_MAX = 50;
-    static final int SLIDER_INIT = 0;
-    
+       
     private double preference;
     
     /**
      * Creates slider with min = 0, max = 100, showing major ticks at
-     * 0, 50, and 100. Sets same color as its panel Sets up unique tick
+     * 0, 50, and 100. Sets same color as its panel. Sets up unique tick
      * labels based on Strings passed in
-     * @param left tick label at 0
-     * @param mid tick label at 50
-     * @param right tick label at 100
+     * @param left tick label at min
+     * @param mid tick label at mid
+     * @param right tick label at max
      */
     public StandardSlider(int min, int max, String left, String mid, String right) {
         super(JSlider.HORIZONTAL, min, max, (min + max) / 2);

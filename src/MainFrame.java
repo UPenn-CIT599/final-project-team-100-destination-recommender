@@ -31,8 +31,7 @@ public class MainFrame extends JFrame {
         super(title);
         
         // Set layout manager /////////////////////////////////////////
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        getContentPane().setLayout(gridBagLayout);
+        getContentPane().setLayout(new GridBagLayout());
 
         // Create Swing components ////////////////////////////////////
         
@@ -117,7 +116,6 @@ public class MainFrame extends JFrame {
         
         JButton resetBtn = new JButton("Reset");
         resetBtn.setPreferredSize(new Dimension(70, 25));
-
         GridBagConstraints gbc_resetBtn = new GridBagConstraints();
         resetBtn.setEnabled(false);
 
@@ -126,19 +124,21 @@ public class MainFrame extends JFrame {
         Container c = getContentPane();
         c.setBackground(mainFrameColor);
         
+        // ***GRID X & Y ZERO-INDEXED***
+        
         // Row 1, Col 1-4: Title
         
         gbc_frameTitle.gridx = 0;
         gbc_frameTitle.gridwidth = 4;
         gbc_frameTitle.gridy = 0;
-        gbc_frameTitle.weighty = 0.40;
+        gbc_frameTitle.weighty = 0.4;
         c.add(frameTitle, gbc_frameTitle);
         
         // Row 2, Col 1-4: Weather Panel
         
         gbc_weatherPanel.gridx = 0;
         gbc_weatherPanel.gridwidth = 4;
-        gbc_weatherPanel.gridy = 1;
+        gbc_weatherPanel.gridy = gbc_frameTitle.gridy + 1;
         gbc_weatherPanel.weighty = 0.2;
         c.add(weatherPanel, gbc_weatherPanel);
         
@@ -205,12 +205,12 @@ public class MainFrame extends JFrame {
         gbc_resetBtn.anchor = GridBagConstraints.CENTER;
         c.add(resetBtn, gbc_resetBtn);
         
-        // Row 7-8, Col 1-4: Display Place Holder
+        // Row 7-10, Col 1-4: Display Place Holder
         
         gbc_placeHolder.gridx = 0;
         gbc_placeHolder.gridy = gbc_resetBtn.gridy + 1;
         gbc_placeHolder.gridwidth = 4;
-        gbc_placeHolder.gridheight = 2;
+        gbc_placeHolder.gridheight = 4;
         gbc_placeHolder.weighty = 5;
         c.add(placeHolder, gbc_placeHolder);
         
@@ -271,16 +271,21 @@ public class MainFrame extends JFrame {
         runBtn.addActionListener(new ActionListener() {
             
             /**
-             * Here is where you pull the user input from
+             * Pulls data from all components and feeds these to CountryAnalysis
+             * engine on back-end to in order to generate top suggested countries
              */
             public void actionPerformed(ActionEvent e) {
 
                 // Run Button "instance variables"
                 String tripMonth = weatherPanel.getMonthSelected();
                 double idealTemp = weatherPanel.getIdealTemp();
+                
                 double weatherPreference = weatherPanel.getUserPreference();
                 double sitePreference = sitePanel.getUserPreference();
-                double costPreference = -1 * costPanel.getUserPreference();
+                double costPreference = -1 * costPanel.getUserPreference(); // negative because countries with "lower" cost scores
+                                                                            // are ranked higher (flipped this because was more
+                                                                            // intuitive to have "looking to ball out" on right)
+                
                 ArrayList<Country> sortedCountries = CountryAnalysis.applyWeights(FileReader.readCSV(tripMonth),
                         sitePreference, costPreference, weatherPreference, idealTemp, tripMonth);
                 if (topN == 0) topN = 1; //in case user does not change topN, defaults to 1
@@ -295,6 +300,8 @@ public class MainFrame extends JFrame {
                 bottomMessage.setVisible(true);
                 topScrollPane.setVisible(true);
                 bottomScrollPane.setVisible(true);
+                
+                // Disable run button, enable reset button
                 runBtn.setEnabled(false);
                 resetBtn.setEnabled(true);
                 
@@ -304,7 +311,7 @@ public class MainFrame extends JFrame {
                 } else if (count == 4) {
                     placeHolder.setText("You should consider giving team 100 a 100 :)");
                 } else {
-                    placeHolder.setText("                                         ");
+                    placeHolder.setText("");
                 }
                 
                 count++;
@@ -335,8 +342,9 @@ public class MainFrame extends JFrame {
                 bottomScrollPane.setVisible(false);                
                 placeHolder.setVisible(true);
                 
-                runBtn.setEnabled(true);
+                // Disable reset button, enable run button
                 resetBtn.setEnabled(false);
+                runBtn.setEnabled(true);
                    
             }
             

@@ -24,11 +24,11 @@ public class SitePanel extends TripComponentPanel {
         //// First Row /////////////////////////////////
 
         JLabel label = new JLabel("How important are historic sites for your trip?");
-        GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-        gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
-        gbc_lblNewLabel.gridx = 0;
-        gbc_lblNewLabel.gridy = 0;
-        add(label, gbc_lblNewLabel);
+        GridBagConstraints gbc_label = new GridBagConstraints();
+        gbc_label.insets = new Insets(0, 0, 5, 0);
+        gbc_label.gridx = 0;
+        gbc_label.gridy = 0;
+        add(label, gbc_label);
         
         //// Second Row /////////////////////////////////
 

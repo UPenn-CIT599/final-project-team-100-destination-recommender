@@ -15,26 +15,25 @@ import javax.swing.SpinnerNumberModel;
 public class WeatherPanel extends TripComponentPanel
                           implements ActionListener {
     
-    /**
-     * Instance variables related to month combo box
-     */
+     // Instance variables related to month combo box
     private String[] months = { "January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December" };
-    private JComboBox<String[]> monthComboBox;
+    private JComboBox<String> monthComboBox;
     private String monthSelected;
         
+    // Instance variables for ideal temp
     private JSpinner tempSpinner;
     private JTextField tempTextField;
     
-    public JComboBox<String[]> getMonthComboBox() {
+    // Getters
+    public JComboBox<String> getMonthComboBox() {
         return monthComboBox;
     }
     
     public String getMonthSelected() {
-        if (monthSelected == null) {
-            return months[Calendar.getInstance().get(Calendar.MONTH)];
+        if (monthSelected == null) { // if user has not moved the combo box from its default state
+            return months[Calendar.getInstance().get(Calendar.MONTH)]; // returns current month
         } 
-        
         return monthSelected;
     }
     
@@ -86,8 +85,8 @@ public class WeatherPanel extends TripComponentPanel
         
         // Row 2, Col 1: Month ComboBox /////////////////////////////////
             
-        monthComboBox = new JComboBox(months);
-        monthComboBox.setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
+        monthComboBox = new JComboBox<String>(months);
+        monthComboBox.setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH)); // default month is current month
         monthComboBox.addActionListener(this);
         
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
