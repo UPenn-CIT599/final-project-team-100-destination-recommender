@@ -1,4 +1,4 @@
-Euro Trip Destination Recommender
+Euro Trip Destination Recommender (ETDR)
 
 The Euro Trip Destination Recommender was created with the goal of helping the trip planner decide where to go.
 The user is prompted with questions in 3 categories: weather, cultural sites, and cost. Based on the user's
@@ -8,10 +8,10 @@ and Numbeo and applying weights based on the user's preference in order to gener
 
 Work Breakdown:
 
-Madhav - Worked with Ryan on development of the data pulling and scoring algorithms; wrote x out of 15
+Madhav - Worked with Ryan on development of the data pulling and scoring algorithms; wrote 4 out of 21
 unit tests; created PowerPoint presentation and voice-over video for extra credit component
 
-Ryan - Worked with Madhav on development of the data pulling and scoring algorithms; wrote x out of 15
+Ryan - Worked with Madhav on development of the data pulling and scoring algorithms; wrote 17 out of 21
 unit tests;
 
 Sean - Built the Swing GUI; handled front-/back-end integration; Put together the README and summary.txt files.
